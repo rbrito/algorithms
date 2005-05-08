@@ -16,11 +16,12 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}[2005/03/16]
+\ProvidesPackage{algorithmic}[2005/05/08]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
 \RequirePackage{calc}
+\RequirePackage{keyval}
 \newboolean{ALC@noend}
 \setboolean{ALC@noend}{false}
 \newcounter{ALC@line}
@@ -31,6 +32,15 @@
 \DeclareOption{noend}{\setboolean{ALC@noend}{true}}
 %
 \ProcessOptions
+%
+%
+% For indentation of algorithms
+\newlength{\algorithmicindent}
+\setlength{\algorithmicindent}{0pt}
+\def\algsetup{\setkeys{ALG}}
+\define@key{ALG}{indent}{\setlength{\algorithmicindent}{#1}}
+\ifthenelse{\lengthtest{\algorithmicindent=0pt}}%
+{\setlength{\algorithmicindent}{1em}}{}
 %
 % ALGORITHMIC
 \newcommand{\algorithmicrequire}{\textbf{Require:}}
@@ -97,7 +107,7 @@
     \begin{list}{\ALC@lno}{ \itemsep\z@ \itemindent\z@
     \listparindent\z@ \rightmargin\z@ 
     \topsep\z@ \partopsep\z@ \parskip\z@\parsep\z@
-    \leftmargin 1em
+    \leftmargin \algorithmicindent%1em
     \addtolength{\ALC@tlm}{\leftmargin}
     }
   }

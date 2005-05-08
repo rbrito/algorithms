@@ -1,36 +1,37 @@
-% ALGORITHMS -- Released 16 MAR 2005
-%    for LaTeX version 2e
+% ALGORITHMS for LaTeX version 2e
 %
 % Current maintainer: Rogério Brito <rbrito@ime.usp.br>
 % Previous maintainer: Peter Williams <pwil3058@bigpond.net.au>
 %
-% This document is free software; you can redistribute it and/or
-% modify it under the terms of the GNU Lesser General Public
-% License as published by the Free Software Foundation; either
-% version 2 of the License, or (at your option) any later version.
+% This document file is free software; you can redistribute it and/or
+% modify it under the terms of the GNU Lesser General Public License as
+% published by the Free Software Foundation; either version 2 of the
+% License, or (at your option) any later version.
 %
-% This document is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-% Lesser General Public License for more details.
+% This document file is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+% General Public License for more details.
 %
-% You should have received a copy of the GNU Lesser General Public
-% License along with this document; if not, write to the
-% Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-% Boston, MA  02111-1307, USA.
+% You should have received a copy of the GNU Lesser General Public License
+% along with this document file; if not, write to the Free Software
+% Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+% USA.
 %
 \documentclass{article}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \title{Algorithms}
-\author{Rogério Brito \\ \texttt{rbrito@ime.usp.br}\thanks{Sincere thanks
+\author{Rogério Brito \\
+  \href{mailto:rbrito@ime.usp.br}{rbrito@ime.usp.br}\thanks{Sincere thanks
     go to the original maintainer of this package, Peter Williams, and for
     being kind enough to allow me to continue with his quite useful work.}}
-\date{16 March 2005}
 \newcommand{\keyword}[1]{\texttt{#1}}
+\newcommand{\filename}[1]{\texttt{#1}}
 \newcommand{\latcom}[1]{\texttt{$\backslash$#1}}
 \begin{document}
 \maketitle
@@ -40,19 +41,21 @@
 \section{Introduction}
 
 This package provides two environments, \keyword{algorithmic} and
-\keyword{algorithm}, which are designed to be used together but may be used
-separately.  The \keyword{algorithmic} environment provides an environment
-for describing algorithms and the \keyword{algorithm} environment provides
-a ``float'' wrapper for algorithms (implemented using \keyword{algorithmic}
+\keyword{algorithm}, which are designed to be used together but may,
+depending on the necessities of the author, be used separately.
+
+The \keyword{algorithmic} environment provides an environment for
+describing algorithms and the \keyword{algorithm} environment provides a
+``float'' wrapper for algorithms (implemented using \keyword{algorithmic}
 or some other method at the author's option).  The reason that two
 environments are provided is to allow the author maximum flexibility.
 
 This work may be distributed and/or modified under the conditions of the
 GNU Lesser General Public License as published by the Free Software
-Foundation (see the file COPYING included in this package).  This package
-(currently) consists of three files: \texttt{algorithm.sty},
-\texttt{algorithmic.sty} and \texttt{algorithms.tex} (the source of this
-document).
+Foundation (see the file \filename{COPYING} included in this package).
+Currently, this package consists of three files: \filename{algorithm.sty},
+\filename{algorithmic.sty} and \filename{algorithms.tex} (the source of
+this document).
 
 \section{The \keyword{algorithmic} Environment}
 
@@ -80,7 +83,7 @@ and is used for simple statements, e.g.
 \end{verbatim}
 would produce
 \begin{algorithmic}
-\STATE $S \leftarrow 0$
+  \STATE $S \leftarrow 0$
 \end{algorithmic}
 and with line numbering selected for every line using
 \begin{verbatim}
@@ -90,7 +93,7 @@ and with line numbering selected for every line using
 \end{verbatim}
 would produce
 \begin{algorithmic}[1]
-\STATE $S \leftarrow 0$
+  \STATE $S \leftarrow 0$
 \end{algorithmic}
 For users of earlier versions of \keyword{algorithmic} this construct is
 a cause of an incompatibility.
@@ -103,9 +106,9 @@ necessary for statement numbering.
 However, the \verb+\\+ command can still be used to force a line break within
 a simple statement.
 
-\subsection{The {\em if-then-else} Construct}
+\subsection{The \emph{if-then-else} Construct}
 
-The {\em if-then-else} construct takes the forms.
+The \emph{if-then-else} construct takes the forms.
 \begin{verbatim}
 \IF{<condition>} <text> \ENDIF
 \IF{<condition>} <text1> \ELSE <text2> \ENDIF
@@ -129,21 +132,21 @@ For example,
 \end{verbatim}
 would produce
 \begin{algorithmic}
-\IF{some condition is true}
-\STATE do some processing
-\ELSIF{some other condition is true}
-\STATE do some different processing
-\ELSIF{some even more bizarre condition is met}
-\STATE do something else
-\ELSE
-\STATE do the default actions
-\ENDIF
+  \IF{some condition is true}
+  \STATE do some processing
+  \ELSIF{some other condition is true}
+  \STATE do some different processing
+  \ELSIF{some even more bizarre condition is met}
+  \STATE do something else
+  \ELSE
+  \STATE do the default actions
+  \ENDIF
 \end{algorithmic}
 with appropriate indentations.
 
-\subsection{The {\em for} Loop}
+\subsection{The \emph{for} Loop}
 
-The {\em for} loop takes the forms.
+The \emph{for} loop takes the forms.
 \begin{verbatim}
 \FOR{<condition>} <text> \ENDFOR
 \FORALL{<condition>} <text> \ENDFOR
@@ -158,9 +161,9 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\FOR{$i=0$ to $10$}
-\STATE carry out some processing 
-\ENDFOR
+  \FOR{$i=0$ to $10$}
+  \STATE carry out some processing 
+  \ENDFOR
 \end{algorithmic}
 and
 \begin{verbatim}
@@ -172,14 +175,14 @@ and
 \end{verbatim}
 produces
 \begin{algorithmic}[1]
-\FORALL{$i$ such that $0\leq i\leq 10$}
-\STATE carry out some processing 
-\ENDFOR
+  \FORALL{$i$ such that $0\leq i\leq 10$}
+  \STATE carry out some processing 
+  \ENDFOR
 \end{algorithmic}
 
-\subsection{The {\em while} Loop}
+\subsection{The \emph{while} Loop}
 
-The {\em while} loop takes the form.
+The \emph{while} loop takes the form.
 \begin{verbatim}
 \WHILE{<condition>} <text> \ENDWHILE
 \end{verbatim}
@@ -193,14 +196,14 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\WHILE{some condition holds}
-\STATE carry out some processing 
-\ENDWHILE
+  \WHILE{some condition holds}
+  \STATE carry out some processing 
+  \ENDWHILE
 \end{algorithmic}
 
-\subsection{The {\em repeat-until} Loop}
+\subsection{The \emph{repeat-until} Loop}
 
-The {\em repeat-until} loop takes the form.
+The \emph{repeat-until} loop takes the form.
 \begin{verbatim}
 \REPEAT <text> \UNTIL{<condition>}
 \end{verbatim}
@@ -214,9 +217,9 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\REPEAT
-\STATE carry out some processing 
-\UNTIL{some condition is met}
+  \REPEAT
+  \STATE carry out some processing 
+  \UNTIL{some condition is met}
 \end{algorithmic}
 
 \subsection{The Infinite Loop}
@@ -235,15 +238,15 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\LOOP
-\STATE this processing will be repeated forever
-\ENDLOOP
+  \LOOP
+  \STATE this processing will be repeated forever
+  \ENDLOOP
 \end{algorithmic}
 
 \subsection{The Precondition}
 
 The precondition (that must be met if an algorithm is to correctly
-execute) takes the form.
+execute) takes the form:
 \begin{verbatim}
 \REQUIRE <text>
 \end{verbatim}
@@ -255,13 +258,13 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\REQUIRE $x \neq 0$ and $n \geq 0$
+  \REQUIRE $x \neq 0$ and $n \geq 0$
 \end{algorithmic}
 
 \subsection{The Postcondition}
 
 The postcondition (that must be met after an algorithm has correctly
-executed) takes the form.
+executed) takes the form:
 \begin{verbatim}
 \ENSURE <text>
 \end{verbatim}
@@ -273,7 +276,7 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\ENSURE $x \neq 0$ and $n \geq 0$
+  \ENSURE $x \neq 0$ and $n \geq 0$
 \end{algorithmic}
 
 \subsection{Returning Values}
@@ -291,8 +294,9 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\RETURN $(x+y)/2$
+  \RETURN $(x+y)/2$
 \end{algorithmic}
+
 \subsection{Printing Messages}
 
 Another feature of the \keyword{algorithmic} environment is that it
@@ -309,13 +313,12 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\PRINT \texttt{``Hello, World!''}
+  \PRINT \texttt{``Hello, World!''}
 \end{algorithmic}
 
 \subsection{Comments}
 
-Comments may be inserted at most points in an algorithm using the
-form.
+Comments may be inserted at most points in an algorithm using the form:
 \begin{verbatim}
 \COMMENT{<text>}
 \end{verbatim}
@@ -327,7 +330,7 @@ For example,
 \end{verbatim}
 produces
 \begin{algorithmic}
-\STATE do something \COMMENT{this is a comment}
+  \STATE do something \COMMENT{this is a comment}
 \end{algorithmic}
 Because the mechanisms used to build the various algorithmic structures
 make it difficult to use the above mechanism for placing comments at the
@@ -338,22 +341,21 @@ and \verb+\LOOP+ all take an optional argument which will be treated
 as a comment to be placed at the end of the line on which they appear.
 For example,
 \begin{algorithmic}
-\REPEAT[this is comment number one]
-\IF[this is comment number two]{condition one is met}
-\STATE do something
-\ELSIF[this is comment number three]{condition two is met}
-\STATE do something else
-\ELSE[this is comment number four]
-\STATE do nothing
-\ENDIF
-\UNTIL{hell freezes over}
+  \REPEAT[this is comment number one]
+  \IF[this is comment number two]{condition one is met}
+  \STATE do something
+  \ELSIF[this is comment number three]{condition two is met}
+  \STATE do something else
+  \ELSE[this is comment number four]
+  \STATE do nothing
+  \ENDIF
+  \UNTIL{hell freezes over}
 \end{algorithmic}
 
 \subsection{An Example}
 
-The following example demonstrates the use of the \texttt{algorithmic}
-environment to describe a complete algorithm.
-The following input
+The following example demonstrates the use of the \keyword{algorithmic}
+environment to describe a complete algorithm.  The following input
 \begin{verbatim}
 \begin{algorithmic}
 \REQUIRE $n \geq 0$
@@ -374,31 +376,93 @@ The following input
 \end{verbatim}
 will produce
 \begin{algorithmic}
-\REQUIRE $n \geq 0$
-\ENSURE $y = x^n$
-\STATE $y \Leftarrow 1$
-\STATE $X \Leftarrow x$
-\STATE $N \Leftarrow n$
-\WHILE{$N \neq 0$}
-\IF{$N$ is even}
-\STATE $X \Leftarrow X \times X$
-\STATE $N \Leftarrow N / 2$
-\ELSE[$N$ is odd]
-\STATE $y \Leftarrow y \times X$
-\STATE $N \Leftarrow N - 1$
-\ENDIF
-\ENDWHILE
+  \REQUIRE $n \geq 0$
+  \ENSURE $y = x^n$
+  \STATE $y \Leftarrow 1$
+  \STATE $X \Leftarrow x$
+  \STATE $N \Leftarrow n$
+  \WHILE{$N \neq 0$}
+  \IF{$N$ is even}
+  \STATE $X \Leftarrow X \times X$
+  \STATE $N \Leftarrow N / 2$
+  \ELSE[$N$ is odd]
+  \STATE $y \Leftarrow y \times X$
+  \STATE $N \Leftarrow N - 1$
+  \ENDIF
+  \ENDWHILE
 \end{algorithmic}
 which is an algorithm for finding the value of a number taken to a
 non-negative power.
 
 \subsection{Options}
 
-There is a single option, \texttt{noend} that may be invoked when
-the \texttt{algorithmic} package is loaded.
-With this option invoked the {\em end} statements are omitted in the
-output.
-This allows space to be saved in the output document when this is an issue.
+There is a single option, \keyword{noend} that may be invoked when the
+\texttt{algorithmic} package is loaded.  With this option invoked the
+\emph{end} statements are omitted in the output.  This allows space to be
+saved in the output document when this is an issue.
+
+\subsubsection{Changing Indentation}
+
+In the spirit of saving vertical space (which is especially important when
+submitting a paper for a journal, where space is frequently limited for
+authors), the \keyword{algorithmic} environment offers, beginning with the
+version released in 2005-05-08, a way to control the amount of indentation
+that is used by a given algorithm.
+
+The amount of indentation to be used is given by the command
+\begin{verbatim}
+\algsetup{indent=lenght}
+\end{verbatim}
+where \emph{length} is any valid length used by \TeX. The default value of
+the indentation used by the \keyword{algorithmic} environment is $1$ em
+(for ``backward compatibility reasons''), but a value of $2$ em or more is
+recommended, depending on the publication. For example, the snippet
+\begin{verbatim}
+\algsetup{indent=2em}
+\begin{algorithmic}
+  \STATE $a \Leftarrow 1$
+  \IF{$a$ is even}
+  \PRINT ``$a$ is even''
+  \ELSE
+  \PRINT ``$a$ is odd''
+\end{algorithmic}
+\end{verbatim}
+produces
+\algsetup{indent=2em}
+\begin{algorithmic}
+  \STATE $a \Leftarrow 1$
+  \IF{$a$ is even}
+  \PRINT ``$a$ is even''
+  \ELSE
+  \PRINT ``$a$ is odd''
+  \ENDIF
+\end{algorithmic}
+while
+\begin{verbatim}
+\algsetup{indent=5em}
+\begin{algorithmic}
+  \STATE $a \Leftarrow 1$
+  \IF{$a$ is even}
+  \PRINT ``$a$ is even''
+  \ELSE
+  \PRINT ``$a$ is odd''
+\end{algorithmic}
+\end{verbatim}
+would produce
+\algsetup{indent=5em}
+\begin{algorithmic}
+  \STATE $a \Leftarrow 1$
+  \IF{$a$ is even}
+  \PRINT ``$a$ is even''
+  \ELSE
+  \PRINT ``$a$ is odd''
+  \ENDIF
+\end{algorithmic}
+\algsetup{indent=1em}
+
+The intended use of this option is to allow the author to omit the
+\emph{end} statements without loosing readability, by increasing the amount
+of indentation to a suitable level.
 
 \subsection{Customization}
 
