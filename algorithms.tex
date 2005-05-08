@@ -1,8 +1,8 @@
-% ALGORITHMS -- Released 8 APRIL 1996
+% ALGORITHMS -- Released 16 MAR 2005
 %    for LaTeX version 2e
-% Copyright -- 1994 Peter Williams
 %
-% E-mail pwil3058@bigpond.net.au
+% Current maintainer: Rogério Brito <rbrito@ime.usp.br>
+% Previous maintainer: Peter Williams <pwil3058@bigpond.net.au>
 %
 % This document is free software; you can redistribute it and/or
 % modify it under the terms of the GNU Lesser General Public
@@ -20,12 +20,16 @@
 % Boston, MA  02111-1307, USA.
 %
 \documentclass{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-%\usepackage[dcu]{harvard}
 \title{Algorithms}
-\author{Peter Williams \\ pwil3058@bigpond.net.au}
-\date{7 April 1996}
+\author{Rogério Brito \\ \texttt{rbrito@ime.usp.br}\thanks{Sincere thanks
+    go to the original maintainer of this package, Peter Williams, and for
+    being kind enough to allow me to continue with his quite useful work.}}
+\date{16 March 2005}
 \newcommand{\keyword}[1]{\texttt{#1}}
 \newcommand{\latcom}[1]{\texttt{$\backslash$#1}}
 \begin{document}
@@ -37,18 +41,17 @@
 
 This package provides two environments, \keyword{algorithmic} and
 \keyword{algorithm}, which are designed to be used together but may be used
-separately.
-The \keyword{algorithmic} environment provides an environment for describing
-algorithms and the \keyword{algorithm} environment provides a ``float''
-wrapper for algorithms (implemented using \keyword{algorithmic} or some
-other method at the author's option).
-The reason that two environments are provided is to allow the author
-maximum flexibility.
+separately.  The \keyword{algorithmic} environment provides an environment
+for describing algorithms and the \keyword{algorithm} environment provides
+a ``float'' wrapper for algorithms (implemented using \keyword{algorithmic}
+or some other method at the author's option).  The reason that two
+environments are provided is to allow the author maximum flexibility.
 
-This work may be distributed and/or modified under the conditions of the GNU
-Lesser General Public License as published by the Free Software Foundation (see
-the file COPYING included in this package).  This package consists of three
-files: algorithm.sty, algorithmic.sty and algorithms.tex (the source of this
+This work may be distributed and/or modified under the conditions of the
+GNU Lesser General Public License as published by the Free Software
+Foundation (see the file COPYING included in this package).  This package
+(currently) consists of three files: \texttt{algorithm.sty},
+\texttt{algorithmic.sty} and \texttt{algorithms.tex} (the source of this
 document).
 
 \section{The \keyword{algorithmic} Environment}
@@ -273,6 +276,42 @@ produces
 \ENSURE $x \neq 0$ and $n \geq 0$
 \end{algorithmic}
 
+\subsection{Returning Values}
+
+The \keyword{algorithmic} environment offers a special statement for
+explicitly returning values in algorithms. It has the syntax:
+\begin{verbatim}
+\RETURN <text>
+\end{verbatim}
+For example,
+\begin{verbatim}
+\begin{algorithmic}
+\RETURN $(x+y)/2$
+\end{algorithmic}
+\end{verbatim}
+produces
+\begin{algorithmic}
+\RETURN $(x+y)/2$
+\end{algorithmic}
+\subsection{Printing Messages}
+
+Another feature of the \keyword{algorithmic} environment is that it
+currently provides a standard way of printing values (which is an operation
+used enough to merit its own keyword). It has the syntax:
+\begin{verbatim}
+\PRINT <text>
+\end{verbatim}
+For example,
+\begin{verbatim}
+\begin{algorithmic}
+\PRINT \texttt{``Hello, World!''}
+\end{algorithmic}
+\end{verbatim}
+produces
+\begin{algorithmic}
+\PRINT \texttt{``Hello, World!''}
+\end{algorithmic}
+
 \subsection{Comments}
 
 Comments may be inserted at most points in an algorithm using the
@@ -385,6 +424,8 @@ The default definitions of these macros are:
 \newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
 \newcommand{\algorithmicrepeat}{\textbf{repeat}}
 \newcommand{\algorithmicuntil}{\textbf{until}}
+\newcommand{\algorithmicprint}{\textbf{print}}
+\newcommand{\algorithmicreturn}{\textbf{return}}
 \end{verbatim}
 
 In addition, the formatting of comments is implemented via a single
@@ -393,6 +434,19 @@ The default definition is
 \begin{verbatim}
 \newcommand{\algorithmiccomment}[1]{\{#1\}}
 \end{verbatim}
+and another option that may be interesting for users familiar with C-like
+languages is to redefine the comments to be
+\begin{verbatim}
+\renewcommand{\algorithmiccomment}[1]{//#1}
+\end{verbatim}
+
+Comments produced this way would be like this:
+\renewcommand{\algorithmiccomment}[1]{//#1}
+\begin{algorithmic}
+  \STATE $i \leftarrow i +1$ \COMMENT{Increments $i$}
+\end{algorithmic}
+This second way to present comments may become the default in a future
+version of the package.
 
 \section{The \keyword{algorithm} Environment}
 
@@ -510,8 +564,3 @@ The default definition for this command is
 \end{verbatim}
 
 \end{document}
-
-
-
-
-

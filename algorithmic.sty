@@ -1,10 +1,4 @@
-% ALGORITHMIC STYLE -- Released 8 APRIL 1996
-%    for LaTeX version 2e
-% Copyright -- 1994 Peter Williams
-%
-% E-mail pwil3058@bigpond.net.au
-%
-% Bug fix (13 July 2004) by Arnaud Giersch <giersch@icps.u-strasbg.fr>
+% ALGORITHMIC STYLE for LaTeX version 2e
 %
 % This style file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU Lesser General Public
@@ -22,7 +16,7 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}
+\ProvidesPackage{algorithmic}[2005/03/16]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
@@ -58,6 +52,8 @@
 \newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
 \newcommand{\algorithmicrepeat}{\textbf{repeat}}
 \newcommand{\algorithmicuntil}{\textbf{until}}
+\newcommand{\algorithmicprint}{\textbf{print}}
+\newcommand{\algorithmicreturn}{\textbf{return}}
 \def\ALC@item[#1]{%
 \if@noparitem \@donoparitem
   \else \if@inlabel \indent \par \fi
@@ -111,6 +107,8 @@
 {}{\ \algorithmiccomment{##1}}}
   \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
   \newcommand{\ENSURE}{\item[\algorithmicensure]}
+  \newcommand{\PRINT}{\ALC@it\algorithmicprint{}\ \ }
+  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
   \newcommand{\STATE}{\ALC@it}
   \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
   \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
@@ -163,18 +161,3 @@
   }
 }
 {\end{list}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
