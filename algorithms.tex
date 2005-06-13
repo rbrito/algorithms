@@ -19,20 +19,26 @@
 % USA.
 %
 \documentclass{article}
+
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+
 \title{Algorithms}
-\author{Rogério Brito \\
+\author{Rogério Brito\\
   \href{mailto:rbrito@ime.usp.br}{rbrito@ime.usp.br}\thanks{Sincere thanks
     go to the original maintainer of this package, Peter Williams, and for
     being kind enough to allow me to continue with his quite useful work.}}
+
 \newcommand{\keyword}[1]{\texttt{#1}}
 \newcommand{\filename}[1]{\texttt{#1}}
 \newcommand{\latcom}[1]{\texttt{$\backslash$#1}}
+
+\setcounter{tocdepth}{2}
+
 \begin{document}
 \maketitle
 \tableofcontents
@@ -55,7 +61,7 @@ GNU Lesser General Public License as published by the Free Software
 Foundation (see the file \filename{COPYING} included in this package).
 Currently, this package consists of three files: \filename{algorithm.sty},
 \filename{algorithmic.sty} and \filename{algorithms.tex} (the source of
-this document).
+this document). This is likely to change in the near future.
 
 \section{The \keyword{algorithmic} Environment}
 
@@ -396,10 +402,10 @@ non-negative power.
 
 \subsection{Options}
 
-There is a single option, \keyword{noend} that may be invoked when the
-\texttt{algorithmic} package is loaded.  With this option invoked the
-\emph{end} statements are omitted in the output.  This allows space to be
-saved in the output document when this is an issue.
+There is a single option, \keyword{noend}\label{kwd:noend} that may be
+invoked when the \texttt{algorithmic} package is loaded.  With this option
+invoked the \emph{end} statements are omitted in the output.  This allows
+space to be saved in the output document when this is an issue.
 
 \subsubsection{Changing Indentation}
 
@@ -461,8 +467,9 @@ would produce
 \algsetup{indent=1em}
 
 The intended use of this option is to allow the author to omit the
-\emph{end} statements without loosing readability, by increasing the amount
-of indentation to a suitable level.
+\emph{end} (see Section~\ref{kwd:noend} for details) statements without
+loosing readability, by increasing the amount of indentation to a suitable
+level.
 
 \subsection{Customization}
 
@@ -626,5 +633,43 @@ The default definition for this command is
 \begin{verbatim}
 \newcommand{\listalgorithmname}{List of Algorithms}
 \end{verbatim}
+
+\section{Labels and References in Algorithms}
+
+With the release of 2005-06-12, now \keyword{algorithmic} accepts labels
+and references to specific lines of a given algorithm, so you don't have to
+hardcode the line numbers yourself when trying to explain what the code
+does in your texts.  Thanks to Arnaud Legrand for the suggestion and patch
+for this missed feature.
+
+An example of its use is shown in Algorithm~\ref{alg2}.
+\begin{algorithm}[h!]
+\caption{Calculate $y = x^n$}
+\label{alg2}
+\begin{algorithmic}[1]
+\REQUIRE $n \geq 0 \vee x \neq 0$
+\ENSURE $y = x^n$
+\STATE $y \Leftarrow 1$
+\IF{$n < 0$}
+\STATE $X \Leftarrow 1 / x$
+\STATE $N \Leftarrow -n$
+\ELSE
+\STATE $X \Leftarrow x$
+\STATE $N \Leftarrow n$
+\ENDIF
+\WHILE{$N \neq 0$}
+\IF{$N$ is even}\label{alg:n-is-even}
+\STATE $X \Leftarrow X \times X$
+\STATE $N \Leftarrow N / 2$
+\ELSE\label{alg:n-is-odd}
+\STATE $y \Leftarrow y \times X$
+\STATE $N \Leftarrow N - 1$
+\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+See that, in line~\ref{alg:n-is-even}, we deal with the case of $N$ being
+even, while, in line~\ref{alg:n-is-odd}, we give treatment to the case of
+$N$ being odd.
 
 \end{document}

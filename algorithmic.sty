@@ -16,7 +16,7 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}[2005/05/08]
+\ProvidesPackage{algorithmic}[2005/06/12]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
@@ -64,6 +64,9 @@
 \newcommand{\algorithmicuntil}{\textbf{until}}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
+\def\ALC@setref{%
+  \def\@currentlabel{\theALC@line}%
+}
 \def\ALC@item[#1]{%
 \if@noparitem \@donoparitem
   \else \if@inlabel \indent \par \fi
@@ -112,7 +115,7 @@
     }
   }
   {\end{list}}
-  \newcommand{\ALC@it}{\addtocounter{ALC@line}{1}\addtocounter{ALC@rem}{1}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item}
+  \newcommand{\ALC@it}{\refstepcounter{ALC@line}\refstepcounter{ALC@rem}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item\ALC@setref}
   \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
 {}{\ \algorithmiccomment{##1}}}
   \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
