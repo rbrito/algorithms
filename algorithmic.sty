@@ -16,7 +16,7 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}[2005/06/12]
+\ProvidesPackage{algorithmic}[2005/07/05]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
@@ -33,14 +33,25 @@
 %
 \ProcessOptions
 %
+% For keyval-style options
+\def\algsetup{\setkeys{ALG}}
 %
 % For indentation of algorithms
 \newlength{\algorithmicindent}
 \setlength{\algorithmicindent}{0pt}
-\def\algsetup{\setkeys{ALG}}
 \define@key{ALG}{indent}{\setlength{\algorithmicindent}{#1}}
 \ifthenelse{\lengthtest{\algorithmicindent=0pt}}%
-{\setlength{\algorithmicindent}{1em}}{}
+        {\setlength{\algorithmicindent}{1em}}{}
+%
+% For line numbers' delimiters
+\newcommand{\ALC@linenodelimiter}{:}
+\define@key{ALG}{linenodelimiter}{\renewcommand{\ALC@linenodelimiter}{#1}}
+
+%
+% For line numbers' size
+\newcommand{\ALC@linenosize}{\footnotesize}
+\define@key{ALG}{linenosize}{\renewcommand{\ALC@linenosize}{#1}}
+
 %
 % ALGORITHMIC
 \newcommand{\algorithmicrequire}{\textbf{Require:}}
@@ -98,7 +109,7 @@
 \let\@item\ALC@item
   \newcommand{\ALC@lno}{%
 \ifthenelse{\equal{\arabic{ALC@rem}}{0}}
-{{\footnotesize \arabic{ALC@line}:}}{}%
+{{\ALC@linenosize \arabic{ALC@line}\ALC@linenodelimiter}}{}%
 }
 \let\@listii\@listi
 \let\@listiii\@listi

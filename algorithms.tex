@@ -42,7 +42,7 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\listofalgorithms
+%\listofalgorithms
 
 \section{Introduction}
 
@@ -64,7 +64,7 @@ Currently, this package consists of three files: \filename{algorithm.sty},
 this document). This is likely to change in the near future.
 
 \section{The \keyword{algorithmic} Environment}
-
+\label{sec:algorithmic-envir}
 Within an \keyword{algorithmic} a number of commands for typesetting
 popular algorithmic constructs are available.
 In general, the commands provided can be arbitrarily nested to
@@ -400,7 +400,7 @@ will produce
 which is an algorithm for finding the value of a number taken to a
 non-negative power.
 
-\subsection{Options}
+\subsection{Options and Customization}
 
 There is a single option, \keyword{noend}\label{kwd:noend} that may be
 invoked when the \texttt{algorithmic} package is loaded.  With this option
@@ -408,7 +408,7 @@ invoked the \emph{end} statements are omitted in the output.  This allows
 space to be saved in the output document when this is an issue.
 
 \subsubsection{Changing Indentation}
-
+\label{sec:changing-indentation}
 In the spirit of saving vertical space (which is especially important when
 submitting a paper for a journal, where space is frequently limited for
 authors), the \keyword{algorithmic} environment offers, beginning with the
@@ -425,7 +425,7 @@ the indentation used by the \keyword{algorithmic} environment is $1$ em
 recommended, depending on the publication. For example, the snippet
 \begin{verbatim}
 \algsetup{indent=2em}
-\begin{algorithmic}
+\begin{algorithmic}[1]
   \STATE $a \Leftarrow 1$
   \IF{$a$ is even}
   \PRINT ``$a$ is even''
@@ -435,7 +435,7 @@ recommended, depending on the publication. For example, the snippet
 \end{verbatim}
 produces
 \algsetup{indent=2em}
-\begin{algorithmic}
+\begin{algorithmic}[1]
   \STATE $a \Leftarrow 1$
   \IF{$a$ is even}
   \PRINT ``$a$ is even''
@@ -446,7 +446,7 @@ produces
 while
 \begin{verbatim}
 \algsetup{indent=5em}
-\begin{algorithmic}
+\begin{algorithmic}[1]
   \STATE $a \Leftarrow 1$
   \IF{$a$ is even}
   \PRINT ``$a$ is even''
@@ -456,7 +456,7 @@ while
 \end{verbatim}
 would produce
 \algsetup{indent=5em}
-\begin{algorithmic}
+\begin{algorithmic}[1]
   \STATE $a \Leftarrow 1$
   \IF{$a$ is even}
   \PRINT ``$a$ is even''
@@ -471,7 +471,60 @@ The intended use of this option is to allow the author to omit the
 loosing readability, by increasing the amount of indentation to a suitable
 level.
 
-\subsection{Customization}
+\subsubsection{Changing Line Numbering}
+
+As mentioned in Section~\ref{sec:algorithmic-envir} and illustrated in
+Section~\ref{sec:changing-indentation}, \keyword{algorithms} already
+provides you with the possibility of numbering lines.
+
+Starting with the version released in 2005-07-05, you can now change two
+aspects of line numbering: the size of the line numbers (which, by default,
+is \verb+\footnotesize+) and the delimiter used to separate the line number
+from the code (which, by default, is \verb+:+, i.e., a colon).
+
+You can change the size of the line numbers using the command:
+\begin{verbatim}
+\algsetup{linenosize=size}
+\end{verbatim}
+where \emph{size} is any of the various commands provided by \LaTeX\ to
+change the size of the font to be used. Among others, useful values are
+\verb+\tiny+, \verb+\scriptsize+, \verb+\footnotesize+ and \verb+\small+.
+Please see the complete list of sizes in your \LaTeX\ documentation.
+
+As another frequently requested feature, you can change the delimiter used
+with the line numbers by issuing the command:
+\begin{verbatim}
+\algsetup{linenodelimiter=delimiter}
+\end{verbatim}
+where \emph{delimiter} is any ``well-formed'' string, including the empty
+string. With this command, you can change the colon to a period (\verb+.+)
+by issuing the command
+\begin{verbatim}
+\algsetup{linenodelimiter=.}
+\end{verbatim}
+or even omit the delimiter, by specifying the empty string or a space
+(\verb+\ +), whatever seems best for your document.
+
+As an example of such commands, the code produced by
+\begin{verbatim}
+\algsetup{linenosize=\small,
+          linenodelimiter=.}
+\begin{algorithmic}[1]
+   \STATE $i \leftarrow 10$
+   \RETURN $i$
+\end{algorithmic}
+\end{verbatim}
+would be something like
+\algsetup{linenosize=\small,
+          linenodelimiter=.}
+\begin{algorithmic}[1]
+   \STATE $i \leftarrow 10$
+   \RETURN $i$
+\end{algorithmic}
+\algsetup{linenosize=\footnotesize,
+          linenodelimiter=:}
+
+\subsubsection{Customization}
 
 In order to facilitate the use of this package with foreign languages, all
 of the words in the output are produced via redefinable macro commands.
@@ -636,11 +689,11 @@ The default definition for this command is
 
 \section{Labels and References in Algorithms}
 
-With the release of 2005-06-12, now \keyword{algorithmic} accepts labels
+With the release of 2005-07-05, now \keyword{algorithmic} accepts labels
 and references to specific lines of a given algorithm, so you don't have to
 hardcode the line numbers yourself when trying to explain what the code
 does in your texts.  Thanks to Arnaud Legrand for the suggestion and patch
-for this missed feature.
+for this highly missed feature.
 
 An example of its use is shown in Algorithm~\ref{alg2}.
 \begin{algorithm}[h!]
