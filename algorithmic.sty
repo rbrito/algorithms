@@ -16,7 +16,7 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}[2005/07/05]
+\ProvidesPackage{algorithmic}[2005/07/27]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
@@ -134,6 +134,7 @@
   \newcommand{\PRINT}{\ALC@it\algorithmicprint{}\ \ }
   \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
   \newcommand{\STATE}{\ALC@it}
+  \newcommand{\STMT}{\ALC@it}
   \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
   \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
   \newenvironment{ALC@for}{\begin{ALC@g}}{\end{ALC@g}}
