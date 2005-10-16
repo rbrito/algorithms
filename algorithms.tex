@@ -509,9 +509,8 @@ As an example of such commands, the code produced by
 \begin{verbatim}
 \algsetup{linenosize=\small,
           linenodelimiter=.}
-\begin{algorithmic}[1]
-   \STATE $i \leftarrow 10$
-   \RETURN $i$
+\begin{algorithmic}[   \STATE $i \leftarrow 10$
+   \RETURN $i$ 
 \end{algorithmic}
 \end{verbatim}
 would be something like
@@ -552,9 +551,18 @@ The default definitions of these macros are:
 \newcommand{\algorithmicreturn}{\textbf{return}}
 \end{verbatim}
 
-In addition, the formatting of comments is implemented via a single
-argument command macro which may also be redefined.
-The default definition is
+If you would like to change the definition of these commands to another
+content, then you should use, in your own document, the standard \LaTeX{}
+command \keyword{renewcommand}, with an usage like this:
+\begin{verbatim}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\end{verbatim}
+
+\paragraph{About the Way Comments Are Formatted}
+
+The formatting of comments is implemented via a single argument command
+macro which may also be redefined.  The default definition is
 \begin{verbatim}
 \newcommand{\algorithmiccomment}[1]{\{#1\}}
 \end{verbatim}
@@ -563,14 +571,13 @@ languages is to redefine the comments to be
 \begin{verbatim}
 \renewcommand{\algorithmiccomment}[1]{//#1}
 \end{verbatim}
-
 Comments produced this way would be like this:
 \renewcommand{\algorithmiccomment}[1]{//#1}
 \begin{algorithmic}
   \STATE $i \leftarrow i +1$ \COMMENT{Increments $i$}
 \end{algorithmic}
 This second way to present comments may become the default in a future
-version of the package.
+version of this package.
 
 \section{The \keyword{algorithm} Environment}
 
@@ -680,9 +687,9 @@ would cause \textbf{Procedure} to be used instead of \textbf{Algorithm}
 within the caption of algorithms.
 
 In a manner analogous to that available for the built in floating
-environments, the heading used for the list of algorithms may be changed
-by redefining the command \verb+listalgorithmname+.
-The default definition for this command is
+environments, the heading used for the list of algorithms may be changed by
+redefining the command \verb+listalgorithmname+.  The default definition
+for this command is
 \begin{verbatim}
 \newcommand{\listalgorithmname}{List of Algorithms}
 \end{verbatim}
@@ -723,6 +730,7 @@ An example of its use is shown in Algorithm~\ref{alg2}.
 \end{algorithm}
 See that, in line~\ref{alg:n-is-even}, we deal with the case of $N$ being
 even, while, in line~\ref{alg:n-is-odd}, we give treatment to the case of
-$N$ being odd.
+$N$ being odd. The numbers you see on this document were generated
+automatically from the source document.
 
 \end{document}
