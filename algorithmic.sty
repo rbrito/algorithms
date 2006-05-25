@@ -75,6 +75,8 @@
 \newcommand{\algorithmicuntil}{\textbf{until}}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
+\newcommand{\algorithmictrue}{\textbf{true}}
+\newcommand{\algorithmicfalse}{\textbf{false}}
 \def\ALC@setref{%
   \def\@currentlabel{\theALC@line}%
 }
@@ -132,7 +134,8 @@
   \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
   \newcommand{\ENSURE}{\item[\algorithmicensure]}
   \newcommand{\PRINT}{\ALC@it\algorithmicprint{}\ \ }
-  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
+  \newcommand{\TRUE}{\ALC@it\algorithmictrue{}\ \ }
+  \newcommand{\FALSE}{\ALC@it\algorithmicfalse{}\ \ }
   \newcommand{\STATE}{\ALC@it}
   \newcommand{\STMT}{\ALC@it}
   \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
