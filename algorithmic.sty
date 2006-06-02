@@ -16,7 +16,7 @@
 % Boston, MA  02111-1307, USA.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{algorithmic}[2005/07/27]
+\ProvidesPackage{algorithmic}[2006/06/02]
 \typeout{Document Style `algorithmic' - environment}
 %
 \RequirePackage{ifthen}
@@ -108,7 +108,7 @@
 \newenvironment{algorithmic}[1][0]{
 \setcounter{ALC@depth}{\@listdepth}%
 \let\@listdepth\c@ALC@depth%
-\let\@item\ALC@item
+\let\@item\ALC@item%
   \newcommand{\ALC@lno}{%
 \ifthenelse{\equal{\arabic{ALC@rem}}{0}}
 {{\ALC@linenosize \arabic{ALC@line}\ALC@linenodelimiter}}{}%
@@ -128,15 +128,15 @@
     }
   }
   {\end{list}}
-  \newcommand{\ALC@it}{\refstepcounter{ALC@line}\refstepcounter{ALC@rem}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item\ALC@setref}
+  \newcommand{\ALC@it}{\refstepcounter{ALC@rem}\refstepcounter{ALC@line}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item\ALC@setref}
   \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
 {}{\ \algorithmiccomment{##1}}}
   \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
   \newcommand{\ENSURE}{\item[\algorithmicensure]}
   \newcommand{\PRINT}{\ALC@it\algorithmicprint{}\ \ }
   \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
-  \newcommand{\TRUE}{\ALC@it\algorithmictrue{}\ \ }
-  \newcommand{\FALSE}{\ALC@it\algorithmicfalse{}\ \ }
+  \newcommand{\TRUE}{\algorithmictrue{}}
+  \newcommand{\FALSE}{\algorithmicfalse{}}
   \newcommand{\STATE}{\ALC@it}
   \newcommand{\STMT}{\ALC@it}
   \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
@@ -178,7 +178,7 @@
     \newcommand{\ENDLOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
   } 
   \renewcommand{\@toodeep}{}
-  \begin{list}{\ALC@lno}{\setcounter{ALC@line}{0}\setcounter{ALC@rem}{0}%
+  \begin{list}{\ALC@lno}{\setcounter{ALC@rem}{0}\setcounter{ALC@line}{0}%
     \itemsep\z@ \itemindent\z@ \listparindent\z@%
     \partopsep\z@ \parskip\z@ \parsep\z@%
     \labelsep 0.5em \topsep 0.2em%

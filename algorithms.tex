@@ -305,6 +305,33 @@ produces
   \RETURN $(x+y)/2$
 \end{algorithmic}
 
+
+\subsubsection{The ``true'' and ``false'' Values}
+
+Since many algorithms have the necessity of returning \emph{true} or
+\emph{false} values, \keyword{algorithms}, starting with version
+2006-06-02, includes the keywords \verb+\TRUE+ and \verb+\FALSE+,
+which are intented to print the values in a standard fashion, like the
+following snippet of an algorithm to decide if an integer $n$ is even or
+odd:
+\begin{verbatim}
+\begin{algorithmic}
+  \IF{$n$ is odd}
+     \RETURN \TRUE
+  \ELSE
+     \RETURN \FALSE
+  \ENDIF
+\end{algorithmic}
+\end{verbatim}
+The code above produces the following output:
+\begin{algorithmic}
+  \IF{$n$ is odd}
+     \RETURN \TRUE
+  \ELSE
+     \RETURN \FALSE
+  \ENDIF
+\end{algorithmic}
+
 \subsection{Printing Messages}
 
 Another feature of the \keyword{algorithmic} environment is that it
@@ -562,6 +589,8 @@ commands.  The default definitions of these macros are:
 \newcommand{\algorithmicuntil}{\textbf{until}}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
+\newcommand{\algorithmictrue}{\textbf{true}}
+\newcommand{\algorithmicfalse}{\textbf{false}}
 \end{verbatim}
 
 If you would like to change the definition of these commands to another
