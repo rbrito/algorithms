@@ -23,7 +23,6 @@
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-%\usepackage{mathptmx}
 \usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -38,7 +37,6 @@
 
 \newcommand{\keyword}[1]{\texttt{#1}}
 \newcommand{\filename}[1]{\texttt{#1}}
-\newcommand{\latcom}[1]{\texttt{$\backslash$#1}}
 
 \setcounter{tocdepth}{2}
 
@@ -740,36 +738,6 @@ algorithms typeset in this document use this option.
   limitation (as far as I know) of the \texttt{float.sty} package.
 \end{warning*}
 
-\subsection[Knonw Issues]{Issues Between \texttt{algorithms} and
-  \href{http://www.ctan.org/tex-archive/help/Catalogue/entries/tocbibind.html}{\texttt{tocbibind}}
-  or \href{http://www.ctan.org/tex-archive/help/Catalogue/entries/memoir.html}{\texttt{memoir}}}
-
-It has been discussed in late 2005 that \texttt{algorithms} may have bad
-interactions with the
-\href{http://www.ctan.org/tex-archive/help/Catalogue/entries/tocbibind.html}{\texttt{tocbibind}}
-or the
-\href{http://www.ctan.org/tex-archive/help/Catalogue/entries/memoir.html}{\texttt{memoir}}
-package (which includes \texttt{tocbibind}).
-
-A workaround has been suggested for the problem. After including
-something like
-\begin{verbatim}
-\usepackage[nottoc]{tocbibind}
-\end{verbatim}
-in the preamble of your document, you can put, after
-\verb+\begin{document}+, the following snippet of code:
-\begin{verbatim}
-\renewcommand{\listofalgorithms}{\begingroup
-  \tocfile{List of Algorithms}{loa}
-\endgroup}
-
-\makeatletter
-\let\l@algorithm\l@figure
-\makeatother
-\end{verbatim}
-which should make the command \verb+\listofalgorithms+ work as expected.
-
-
 \section[References in Algorithms]%
 {Labels and References in Algorithms}
 
@@ -809,6 +777,38 @@ See that, in line~\ref{alg:n-is-even}, we deal with the case of $N$
 being even, while, in line~\ref{alg:n-is-odd}, we give treatment to the
 case of $N$ being odd. The numbers you see on this document were
 generated automatically from the source document.
+
+
+\section[Known Issues]{Issues Between \texttt{algorithms} and
+  \href{http://www.ctan.org/tex-archive/help/Catalogue/entries/tocbibind.html}{\texttt{tocbibind}}
+  or \href{http://www.ctan.org/tex-archive/help/Catalogue/entries/memoir.html}{\texttt{memoir}}}
+
+It
+\href{http://groups.google.com/group/comp.text.tex/browse_thread/thread/4094e0c4f4fbd83e/a80a3f4666c794f0?fwc=1}{has
+  been discussed} in late 2005 that \texttt{algorithms} may have bad
+interactions with the
+\href{http://www.ctan.org/tex-archive/help/Catalogue/entries/tocbibind.html}{\texttt{tocbibind}}
+or the
+\href{http://www.ctan.org/tex-archive/help/Catalogue/entries/memoir.html}{\texttt{memoir}}
+package (which includes \texttt{tocbibind}).
+
+A workaround has been suggested for the problem. After including
+something like
+\begin{verbatim}
+\usepackage[nottoc]{tocbibind}
+\end{verbatim}
+in the preamble of your document, you can put, after
+\verb+\begin{document}+, the following snippet of code:
+\begin{verbatim}
+\renewcommand{\listofalgorithms}{\begingroup
+  \tocfile{List of Algorithms}{loa}
+\endgroup}
+
+\makeatletter
+\let\l@algorithm\l@figure
+\makeatother
+\end{verbatim}
+which should make the command \verb+\listofalgorithms+ work as expected.
 
 \addtocontents{toc}{\protect\end{multicols}}
 \end{document}
