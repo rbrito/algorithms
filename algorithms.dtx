@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 %
 %  Copyright (C) 1994-2004   Peter Williams <pwil3058@bigpond.net.au>
-%  Copyright (C) 2005-2007   Rogério Brito <rbrito@ime.usp.br>
+%  Copyright (C) 2005-2008   Rogério Brito <rbrito@ime.usp.br>
 %
 % This document file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU Lesser General Public License as
@@ -23,18 +23,18 @@
 % \iffalse
 %<algorithm>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithm>\ProvidesPackage{algorithm}
-%<algorithm>   [2007/06/19 v0.1 Document Style `algorithm' - floating environment]
+%<algorithm>   [2008/07/23 v0.1 Document Style `algorithm' - floating environment]
 %
 %<algorithmic>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithmic>\ProvidesPackage{algorithmic}
-%<algorithmic>   [2007/06/19 v0.1 Document Style `algorithmic']
+%<algorithmic>   [2008/07/23 v0.1 Document Style `algorithmic']
 %
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[sc]{mathpazo}
 \usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -66,7 +66,7 @@
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
-% \changes{v0.1}{2007/06/19}{Migrated the package to .ins and .dtx format}
+% \changes{v0.1}{2008/07/23}{Migrated the package to .ins and .dtx format}
 %
 % \GetFileInfo{algorithm.sty}
 % \GetFileInfo{algorithmic.sty}
@@ -75,8 +75,8 @@
 % \DoNotIndex{\advance,\begingroup,\catcode,\closein}
 % \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
 %
-% \title{The \textsf{algorithm} package\thanks{This document
-%     corresponds to \textsf{algorithm}~\fileversion,
+% \title{The \textsf{algorithms} bundle\thanks{This document
+%     corresponds to \textsf{algorithms}~\fileversion,
 %     dated~\filedate.}}
 % \author{Rogério Brito\\ \texttt{rbrito@ime.usp.br}}
 %
@@ -106,10 +106,15 @@
 % This work may be distributed and/or modified under the conditions of the
 % GNU Lesser General Public License as published by the Free Software
 % Foundation (see the file \nameoffile{COPYING} included in this package).
-% Currently, this package consists of three files:
-% \nameoffile{algorithm.sty}, \nameoffile{algorithmic.sty} and
-% \nameoffile{algorithms.tex} (the source of this document). This is likely
-% to change in the near future.
+% Currently, this package consists of the following files:
+% \begin{itemize}
+%   \item \nameoffile{algorithms.ins}: the driver file
+%   \item \nameoffile{algorithms.dtx}: the source file
+%   \item \nameoffile{COPYING}: the license file
+%   \item \nameoffile{README}: remarks about the package
+%   \item \nameoffile{THANKS}: mentions of thanks for contributors to
+%   the package
+% \end{itemize}
 %
 % \section[Environment: \keyword{algorithmic}]%
 % {The \keyword{algorithmic} Environment}
@@ -437,16 +442,16 @@
 % \begin{algorithmic}
 % \REQUIRE $n \geq 0$
 % \ENSURE $y = x^n$
-% \STATE $y \Leftarrow 1$
-% \STATE $X \Leftarrow x$
-% \STATE $N \Leftarrow n$
+% \STATE $y \leftarrow 1$
+% \STATE $X \leftarrow x$
+% \STATE $N \leftarrow n$
 % \WHILE{$N \neq 0$}
 % \IF{$N$ is even}
-% \STATE $X \Leftarrow X \times X$
-% \STATE $N \Leftarrow N / 2$
+% \STATE $X \leftarrow X \times X$
+% \STATE $N \leftarrow N / 2$
 % \ELSE[$N$ is odd]
-% \STATE $y \Leftarrow y \times X$
-% \STATE $N \Leftarrow N - 1$
+% \STATE $y \leftarrow y \times X$
+% \STATE $N \leftarrow N - 1$
 % \ENDIF
 % \ENDWHILE
 % \end{algorithmic}
@@ -456,16 +461,16 @@
 %   \REQUIRE $n \geq 0$
 %   \ENSURE $y = x^n$
 %
-%   \STATE $y \Leftarrow 1$
-%   \STATE $X \Leftarrow x$
-%   \STATE $N \Leftarrow n$
+%   \STATE $y \leftarrow 1$
+%   \STATE $X \leftarrow x$
+%   \STATE $N \leftarrow n$
 %   \WHILE{$N \neq 0$}
 %     \IF{$N$ is even}
-%       \STATE $X \Leftarrow X \times X$
-%       \STATE $N \Leftarrow N / 2$
+%       \STATE $X \leftarrow X \times X$
+%       \STATE $N \leftarrow N / 2$
 %     \ELSE[$N$ is odd]
-%       \STATE $y \Leftarrow y \times X$
-%       \STATE $N \Leftarrow N - 1$
+%       \STATE $y \leftarrow y \times X$
+%       \STATE $N \leftarrow N - 1$
 %     \ENDIF
 %   \ENDWHILE
 % \end{algorithmic}
@@ -501,7 +506,7 @@
 % \begin{verbatim}
 % \algsetup{indent=2em}
 % \begin{algorithmic}[1]
-%   \STATE $a \Leftarrow 1$
+%   \STATE $a \leftarrow 1$
 %   \IF{$a$ is even}
 %   \PRINT ``$a$ is even''
 %   \ELSE
@@ -511,7 +516,7 @@
 % produces
 % \algsetup{indent=2em}
 % \begin{algorithmic}[1]
-%   \STATE $a \Leftarrow 1$
+%   \STATE $a \leftarrow 1$
 %   \IF{$a$ is even}
 %     \PRINT ``$a$ is even''
 %   \ELSE
@@ -522,7 +527,7 @@
 % \begin{verbatim}
 % \algsetup{indent=5em}
 % \begin{algorithmic}[1]
-%   \STATE $a \Leftarrow 1$
+%   \STATE $a \leftarrow 1$
 %   \IF{$a$ is even}
 %   \PRINT ``$a$ is even''
 %   \ELSE
@@ -532,7 +537,7 @@
 % would produce
 % \algsetup{indent=5em}
 % \begin{algorithmic}[1]
-%   \STATE $a \Leftarrow 1$
+%   \STATE $a \leftarrow 1$
 %   \IF{$a$ is even}
 %     \PRINT ``$a$ is even''
 %   \ELSE
@@ -659,7 +664,7 @@
 % Comments produced this way would be like this:
 % \renewcommand{\algorithmiccomment}[1]{// #1}
 % \begin{algorithmic}
-%   \STATE $i \leftarrow i +1$ \COMMENT{Increments $i$}
+%   \STATE $i \leftarrow i + 1$ \COMMENT{Increments $i$}
 % \end{algorithmic}
 % This second way to present comments may become the default in a future
 % version of this package.
@@ -690,21 +695,21 @@
 % \begin{algorithmic}
 % \REQUIRE $n \geq 0 \vee x \neq 0$
 % \ENSURE $y = x^n$
-% \STATE $y \Leftarrow 1$
+% \STATE $y \leftarrow 1$
 % \IF{$n < 0$}
-% \STATE $X \Leftarrow 1 / x$
-% \STATE $N \Leftarrow -n$
+% \STATE $X \leftarrow 1 / x$
+% \STATE $N \leftarrow -n$
 % \ELSE
-% \STATE $X \Leftarrow x$
-% \STATE $N \Leftarrow n$
+% \STATE $X \leftarrow x$
+% \STATE $N \leftarrow n$
 % \ENDIF
 % \WHILE{$N \neq 0$}
 % \IF{$N$ is even}
-% \STATE $X \Leftarrow X \times X$
-% \STATE $N \Leftarrow N / 2$
+% \STATE $X \leftarrow X \times X$
+% \STATE $N \leftarrow N / 2$
 % \ELSE[$N$ is odd]
-% \STATE $y \Leftarrow y \times X$
-% \STATE $N \Leftarrow N - 1$
+% \STATE $y \leftarrow y \times X$
+% \STATE $N \leftarrow N - 1$
 % \ENDIF
 % \ENDWHILE
 % \end{algorithmic}
@@ -722,22 +727,22 @@
 %     \REQUIRE $n \geq 0 \vee x \neq 0$
 %     \ENSURE $y = x^n$
 %
-%     \STATE $y \Leftarrow 1$
+%     \STATE $y \leftarrow 1$
 %     \IF{$n < 0$}
-%        \STATE $X \Leftarrow 1 / x$
-%        \STATE $N \Leftarrow -n$
+%        \STATE $X \leftarrow 1 / x$
+%        \STATE $N \leftarrow -n$
 %     \ELSE
-%        \STATE $X \Leftarrow x$
-%        \STATE $N \Leftarrow n$
+%        \STATE $X \leftarrow x$
+%        \STATE $N \leftarrow n$
 %     \ENDIF
 %
 %     \WHILE{$N \neq 0$}
 %       \IF{$N$ is even}
-%         \STATE $X \Leftarrow X \times X$
-%         \STATE $N \Leftarrow N / 2$
+%         \STATE $X \leftarrow X \times X$
+%         \STATE $N \leftarrow N / 2$
 %       \ELSE[$N$ is odd]
-%         \STATE $y \Leftarrow y \times X$
-%         \STATE $N \Leftarrow N - 1$
+%         \STATE $y \leftarrow y \times X$
+%         \STATE $N \leftarrow N - 1$
 %       \ENDIF
 %     \ENDWHILE
 %   \end{algorithmic}
@@ -826,21 +831,21 @@
 %   \begin{algorithmic}[1]
 %     \REQUIRE $n \geq 0 \vee x \neq 0$
 %     \ENSURE $y = x^n$
-%     \STATE $y \Leftarrow 1$
+%     \STATE $y \leftarrow 1$
 %     \IF{$n < 0$}
-%     \STATE $X \Leftarrow 1 / x$
-%     \STATE $N \Leftarrow -n$
+%     \STATE $X \leftarrow 1 / x$
+%     \STATE $N \leftarrow -n$
 %     \ELSE
-%     \STATE $X \Leftarrow x$
-%     \STATE $N \Leftarrow n$
+%     \STATE $X \leftarrow x$
+%     \STATE $N \leftarrow n$
 %     \ENDIF
 %     \WHILE{$N \neq 0$}
 %     \IF{$N$ is even}\label{alg:n-is-even}
-%     \STATE $X \Leftarrow X \times X$
-%     \STATE $N \Leftarrow N / 2$
+%     \STATE $X \leftarrow X \times X$
+%     \STATE $N \leftarrow N / 2$
 %     \ELSE\label{alg:n-is-odd}
-%     \STATE $y \Leftarrow y \times X$
-%     \STATE $N \Leftarrow N - 1$
+%     \STATE $y \leftarrow y \times X$
+%     \STATE $N \leftarrow N - 1$
 %     \ENDIF
 %     \ENDWHILE
 %   \end{algorithmic}
@@ -895,8 +900,8 @@
 %<algorithm>\newcommand{\ALG@name}{Algorithm}
 %<algorithm>\newcommand{\listalgorithmname}{List of \ALG@name s}
 %
-%<algorithm>%Declare Options
-%<algorithm>%first appearance
+%<algorithm>% Declare Options:
+%<algorithm>% * first: appearance
 %<algorithm>\DeclareOption{plain}{
 %<algorithm>  \renewcommand{\ALG@floatstyle}{plain}
 %<algorithm>}
@@ -906,7 +911,7 @@
 %<algorithm>\DeclareOption{boxed}{
 %<algorithm>  \renewcommand{\ALG@floatstyle}{boxed}
 %<algorithm>}
-%<algorithm>%then numbering convention
+%<algorithm>% * then: numbering convention
 %<algorithm>\DeclareOption{part}{
 %<algorithm>  \renewcommand{\ALG@within}{part}
 %<algorithm>  \setboolean{ALG@within}{true}
@@ -933,7 +938,7 @@
 %<algorithm>}
 %<algorithm>\DeclareOption*{\edef\ALG@name{\CurrentOption}}
 %
-%<algorithm>%ALGORITHM
+%<algorithm>% ALGORITHM
 %<algorithm>%
 %<algorithm>\ProcessOptions
 %<algorithm>\floatstyle{\ALG@floatstyle}
@@ -958,7 +963,7 @@
 %<algorithm>\newcommand{\listofalgorithms}{\listof{algorithm}{\listalgorithmname}}
 %
 %
-%<algorithmic>%The algorithmic.sty package:
+%<algorithmic>% The algorithmic.sty package:
 %
 %<algorithmic>\RequirePackage{ifthen}
 %<algorithmic>\RequirePackage{calc}
