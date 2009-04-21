@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 %
 %  Copyright (C) 1994-2004   Peter Williams <pwil3058@bigpond.net.au>
-%  Copyright (C) 2005-2008   Rogério Brito <rbrito@ime.usp.br>
+%  Copyright (C) 2005-2009   Rogério Brito <rbrito@ime.usp.br>
 %
 % This document file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU Lesser General Public License as
@@ -23,11 +23,11 @@
 % \iffalse
 %<algorithm>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithm>\ProvidesPackage{algorithm}
-%<algorithm>   [2008/07/23 v0.1 Document Style `algorithm' - floating environment]
+%<algorithm>   [2009/04/21 v0.1 Document Style `algorithm' - floating environment]
 %
 %<algorithmic>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithmic>\ProvidesPackage{algorithmic}
-%<algorithmic>   [2008/07/23 v0.1 Document Style `algorithmic']
+%<algorithmic>   [2009/04/21 v0.1 Document Style `algorithmic']
 %
 %
 %<*driver>
@@ -66,7 +66,7 @@
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
-% \changes{v0.1}{2008/07/23}{Migrated the package to .ins and .dtx format}
+% \changes{v0.1}{2009/04/21}{Migrated the package to .ins and .dtx format}
 %
 % \GetFileInfo{algorithm.sty}
 % \GetFileInfo{algorithmic.sty}
@@ -78,7 +78,7 @@
 % \title{The \textsf{algorithms} bundle\thanks{This document
 %     corresponds to \textsf{algorithms}~\fileversion,
 %     dated~\filedate.}}
-% \author{Rogério Brito\\ \texttt{rbrito@ime.usp.br}}
+% \author{Rogério Brito\\ \href{mailto:rbrito@ime.usp.br}{\texttt{rbrito@ime.usp.br}}}
 %
 % \newcommand{\keyword}[1]{\texttt{#1}}
 % \newcommand{\nameoffile}[1]{\texttt{#1}}
@@ -97,15 +97,18 @@
 % depending on the necessities of the author, be used separately.
 %
 % The \keyword{algorithmic} environment provides an environment for
-% describing algorithms and the \keyword{algorithm} environment provides a
-% ``float'' wrapper for algorithms (implemented using
-% \keyword{algorithmic} or some other method at the author's option).  The
-% reason that two environments are provided is to allow the author maximum
-% flexibility.
+% describing algorithms and the \keyword{algorithm} environment provides
+% a ``float'' wrapper for algorithms (implemented using
+% \keyword{algorithmic} or some other method at the author's option).
+% The reason for two environments being provided is to allow the author
+% maximum flexibility.
 %
-% This work may be distributed and/or modified under the conditions of the
-% GNU Lesser General Public License as published by the Free Software
-% Foundation (see the file \nameoffile{COPYING} included in this package).
+% This work may be distributed and/or modified under the conditions of
+% the GNU Lesser General Public License, either version 2 of the
+% License, or (at your option) any later version, as published by the
+% Free Software Foundation. See the file \nameoffile{COPYING} included
+% in this package for further details.
+%
 % Currently, this package consists of the following files:
 % \begin{itemize}
 %   \item \nameoffile{algorithms.ins}: the driver file
@@ -115,6 +118,24 @@
 %   \item \nameoffile{THANKS}: mentions of thanks for contributors to
 %   the package
 % \end{itemize}
+%
+% Starting with with the 2009/04/21 release, the package is now
+% versioned and this document corresponds to version~\fileversion.
+%
+%\section{Installation}
+%
+% The installation procedure of \textsf{algorithms} follows the usual
+% practice of packages shipped with a pair of
+% \nameoffile{.ins}/\nameoffile{.dtx}---simply type the comand:
+% \begin{quote}
+% \texttt{latex algorithms.ins}
+% \end{quote}
+% and the \nameoffile{.sty} files will be generated. Copy them to a
+% place that is referenced by your \LaTeX{} distribution. To generate
+% the documentation, type:
+% \begin{quote}
+% \texttt{latex algorithms.dtx}
+% \end{quote}
 %
 % \section[Environment: \keyword{algorithmic}]%
 % {The \keyword{algorithmic} Environment}
@@ -887,6 +908,30 @@
 % \end{verbatim}
 % which should make the command \verb+\listofalgorithms+ work as expected.
 %
+% \section[General Hints]{Hints for Typesetting Algorithms}
+%
+% Here are some short hints on typesetting algorithms:
+% \begin{itemize}
+%   \item Don't overcomment your pseudo-code. If you feel that you need to
+%   comment too much, then you are probably doing something wrong: you should
+%   probably detail the inner workings of the algorithm in regular text
+%   rather than in the pseudo-code;
+%   \item Similarly, don't regard pseudo-code as a low-level programming
+%   language: \emph{don't pollute your algorithms} with punctuation marks
+%   like semi-colons, which are necessary in C, C++ and Java, but not in
+%   pseudo-code. Remember: your readers \emph{are not} compilers;
+%   \item Always document what the algorithm receives as an input and what it
+%   returns as a solution. Don't care to say in the \verb+\REQUIRE+ or in the
+%   \verb+\ENSURE+ commands \emph{how} the algorithm does what it does. Put
+%   this in the regular text of your book/paper/lecture notes;
+%   \item If you feel that your pseudo-code is getting too big, just break it
+%   into sub-algorithms, perhaps abstracting some tasks. Your readers will
+%   probably thank you.
+% \end{itemize}
+%
+% Of course, you should follow those hints with common sense. Well, anything
+% should be done with common sense.
+%
 % \addtocontents{toc}{\protect\end{multicols}}
 % \end{document}
 %
@@ -970,8 +1015,10 @@
 %<algorithmic>\RequirePackage{keyval}
 %<algorithmic>\newboolean{ALC@noend}
 %<algorithmic>\setboolean{ALC@noend}{false}
-%<algorithmic>\newcounter{ALC@line}
-%<algorithmic>\newcounter{ALC@rem}
+%<algorithmic>\newcounter{ALC@unique}    % new counter to make lines numbers be internally
+%<algorithmic>\setcounter{ALC@unique}{0} % different in different algorithms
+%<algorithmic>\newcounter{ALC@line}      % counter for current line
+%<algorithmic>\newcounter{ALC@rem}       % counter for lines not printed
 %<algorithmic>\newcounter{ALC@depth}
 %<algorithmic>\newlength{\ALC@tlm}
 %<algorithmic>%
@@ -1023,9 +1070,6 @@
 %<algorithmic>\newcommand{\algorithmicreturn}{\textbf{return}}
 %<algorithmic>\newcommand{\algorithmictrue}{\textbf{true}}
 %<algorithmic>\newcommand{\algorithmicfalse}{\textbf{false}}
-%<algorithmic>\def\ALC@setref{%
-%<algorithmic>  \def\@currentlabel{\theALC@line}%
-%<algorithmic>}
 %<algorithmic>\def\ALC@item[#1]{%
 %<algorithmic>\if@noparitem \@donoparitem
 %<algorithmic>  \else \if@inlabel \indent \par \fi
@@ -1074,7 +1118,13 @@
 %<algorithmic>    }
 %<algorithmic>  }
 %<algorithmic>  {\end{list}}
-%<algorithmic>  \newcommand{\ALC@it}{\refstepcounter{ALC@rem}\refstepcounter{ALC@line}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item\ALC@setref}
+%<algorithmic>  \newcommand{\ALC@it}{%
+%<algorithmic>    \stepcounter{ALC@rem}%
+%<algorithmic>    \ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}%
+%<algorithmic>    \stepcounter{ALC@line}%
+%<algorithmic>    \refstepcounter{ALC@unique}%
+%<algorithmic>    \item\def\@currentlabel{\theALC@line}%
+%<algorithmic>  }
 %<algorithmic>  \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
 %<algorithmic>{}{\ \algorithmiccomment{##1}}}
 %<algorithmic>  \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
