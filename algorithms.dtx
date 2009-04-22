@@ -1068,6 +1068,15 @@
 %<algorithmic>\newcommand{\algorithmicuntil}{\textbf{until}}
 %<algorithmic>\newcommand{\algorithmicprint}{\textbf{print}}
 %<algorithmic>\newcommand{\algorithmicreturn}{\textbf{return}}
+%<algorithmic>\newcommand{\algorithmicand}{\textbf{and}}
+%<algorithmic>\newcommand{\algorithmicor}{\textbf{or}}
+%<algorithmic>\newcommand{\algorithmicxor}{\textbf{xor}}
+%<algorithmic>\newcommand{\algorithmicnot}{\textbf{not}}
+%<algorithmic>\newcommand{\algorithmicto}{\textbf{to}}
+%<algorithmic>\newcommand{\algorithmicinputs}{\textbf{inputs}}
+%<algorithmic>\newcommand{\algorithmicoutputs}{\textbf{outputs}}
+%<algorithmic>\newcommand{\algorithmicglobals}{\textbf{globals}}
+%<algorithmic>\newcommand{\algorithmicbody}{\textbf{do}}
 %<algorithmic>\newcommand{\algorithmictrue}{\textbf{true}}
 %<algorithmic>\newcommand{\algorithmicfalse}{\textbf{false}}
 %<algorithmic>\def\ALC@item[#1]{%
@@ -1133,15 +1142,31 @@
 %<algorithmic>  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
 %<algorithmic>  \newcommand{\TRUE}{\algorithmictrue{}}
 %<algorithmic>  \newcommand{\FALSE}{\algorithmicfalse{}}
+%<algorithmic>  \newcommand{\BAND}{\algorithmicand{}}
+%<algorithmic>  \newcommand{\OR}{\algorithmicor{}}
+%<algorithmic>  \newcommand{\XOR}{\algorithmicxor{}}
+%<algorithmic>  \newcommand{\NOT}{\algorithmicnot{}}
+%<algorithmic>  \newcommand{\TO}{\algorithmicto{}}
 %<algorithmic>  \newcommand{\STATE}{\ALC@it}
 %<algorithmic>  \newcommand{\STMT}{\ALC@it}
 %<algorithmic>  \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
+%<algorithmic>  \newenvironment{ALC@inputs}{\begin{ALC@g}}{\end{ALC@g}}
+%<algorithmic>  \newenvironment{ALC@outputs}{\begin{ALC@g}}{\end{ALC@g}}
+%<algorithmic>  \newenvironment{ALC@globals}{\begin{ALC@g}}{\end{ALC@g}}
+%<algorithmic>  \newenvironment{ALC@body}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \newenvironment{ALC@for}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \newenvironment{ALC@whl}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \newenvironment{ALC@loop}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \newenvironment{ALC@rpt}{\begin{ALC@g}}{\end{ALC@g}}
 %<algorithmic>  \renewcommand{\\}{\@centercr}
+%<algorithmic>  \newcommand{\INPUTS}[1][default]{\ALC@it\algorithmicinputs\ \ALC@com{##1}\begin{ALC@inputs}}
+%<algorithmic>  \newcommand{\ENDINPUTS}{\end{ALC@inputs}}
+%<algorithmic>  \newcommand{\OUTPUTS}[1][default]{\ALC@it\algorithmicoutputs\ \ALC@com{##1}\begin{ALC@outputs}}
+%<algorithmic>  \newcommand{\ENDOUTPUTS}{\end{ALC@outputs}}
+%<algorithmic>  \newcommand{\GLOBALS}{\ALC@it\algorithmicglobals\ }
+%<algorithmic>  \newcommand{\BODY}[1][default]{\ALC@it\algorithmicbody\ \ALC@com{##1}\begin{ALC@body}}
+%<algorithmic>  \newcommand{\ENDBODY}{\end{ALC@body}}
 %<algorithmic>  \newcommand{\IF}[2][default]{\ALC@it\algorithmicif\ ##2\ \algorithmicthen%
 %<algorithmic>\ALC@com{##1}\begin{ALC@if}}
 %<algorithmic>  \newcommand{\ELSE}[1][default]{\end{ALC@if}\ALC@it\algorithmicelse%
