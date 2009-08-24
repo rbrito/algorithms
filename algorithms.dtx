@@ -23,11 +23,11 @@
 % \iffalse
 %<algorithm>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithm>\ProvidesPackage{algorithm}
-%<algorithm>   [2009/04/21 v0.1 Document Style `algorithm' - floating environment]
+%<algorithm>   [2009/08/24 v0.1 Document Style `algorithm' - floating environment]
 %
 %<algorithmic>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<algorithmic>\ProvidesPackage{algorithmic}
-%<algorithmic>   [2009/04/21 v0.1 Document Style `algorithmic']
+%<algorithmic>   [2009/08/24 v0.1 Document Style `algorithmic']
 %
 %
 %<*driver>
@@ -38,7 +38,6 @@
 \usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{amsthm}
 \usepackage{multicol}
 \EnableCrossrefs
 \CodelineIndex
@@ -66,7 +65,7 @@
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
-% \changes{v0.1}{2009/04/21}{Migrated the package to .ins and .dtx format}
+% \changes{v0.1}{2009/08/24}{Migrated the package to .ins and .dtx format}
 %
 % \GetFileInfo{algorithm.sty}
 % \GetFileInfo{algorithmic.sty}
@@ -90,17 +89,20 @@
 % \tableofcontents
 % \listofalgorithms
 %
+% % \newtheorem{warning}{Warning}
+% \renewcommand{\thewarning}{}
+%
 % \section{Introduction}
 %
 % This package provides two environments, \keyword{algorithmic} and
 % \keyword{algorithm}, which are designed to be used together but may,
-% depending on the necessities of the author, be used separately.
+% depending on the necessities of the user, be used separately.
 %
 % The \keyword{algorithmic} environment provides an environment for
 % describing algorithms and the \keyword{algorithm} environment provides
 % a ``float'' wrapper for algorithms (implemented using
-% \keyword{algorithmic} or some other method at the author's option).
-% The reason for two environments being provided is to allow the author
+% \keyword{algorithmic} or some other method at the users's option).
+% The reason for two environments being provided is to allow the user
 % maximum flexibility.
 %
 % This work may be distributed and/or modified under the conditions of
@@ -119,8 +121,14 @@
 %   the package
 % \end{itemize}
 %
-% Starting with with the 2009/04/21 release, the package is now
+% Starting with with the 2009-08-24 release, the package is now
 % versioned and this document corresponds to version~\fileversion.
+%
+% If you use this package, the author would kindly appreciate if you
+% mentioned it in your documents, so as to let the package be better
+% known and have more contributors, to make it better for the community
+% itself.  This is \emph{not} required by the license: it's just a
+% friendly request.
 %
 %\section{Installation}
 %
@@ -141,59 +149,63 @@
 % {The \keyword{algorithmic} Environment}
 % \label{sec:algorithmic-envir}
 % Within an \keyword{algorithmic} a number of commands for typesetting
-% popular algorithmic constructs are available.  In general, the commands
-% provided can be arbitrarily nested to describe quite complex algorithms.
-% An optional argument to the \verb+\begin{algorithmic}+ statement can be
-%   used to turn on line numbering by giving a positive integer indicating
-%   the required frequency of line numbering.  For example,
-%   \verb+\begin{algorithmic}[5]+ would cause every fifth line to be
-%     numbered.
+% popular algorithmic constructs are available.  In general, the
+% commands provided can be arbitrarily nested to describe quite complex
+% algorithms.  An optional argument to the \verb+\begin{algorithmic}+
+% statement can be used to turn on line numbering by giving a positive
+% integer indicating the required frequency of line numbering.  For
+% example, \verb+\begin{algorithmic}[5]+ would cause every fifth line
+% to be numbered.
 %
 % \subsection{The Simple Statement}
 %
 % The simple statement takes the form
 % \begin{verbatim}
-% \STATE <text>
+%   \STATE <text>
 % \end{verbatim}
-% and is used for simple statements, e.g.
+% and is used for simple statements. For example,
 % \begin{verbatim}
 % \begin{algorithmic}
-% \STATE $S \leftarrow 0$
+%   \STATE $S \leftarrow 0$
 % \end{algorithmic}
 % \end{verbatim}
 % would produce
 % \begin{algorithmic}
 %   \STATE $S \leftarrow 0$
 % \end{algorithmic}
-% and with line numbering selected for every line using
+% With line numbering selected for every line, using,
 % \begin{verbatim}
-% \begin{algorithmic}[1]
-% \STATE $S \leftarrow 0$
-% \end{algorithmic}
-% \end{verbatim}
-% would produce
 % \begin{algorithmic}[1]
 %   \STATE $S \leftarrow 0$
 % \end{algorithmic}
-% For users of earlier versions of \keyword{algorithmic} this construct is
-% a cause of an incompatibility.  In the earlier version, instead of
-% starting simple statements with the \verb+\STATE+ command, simple
-% statements were entered as free text and terminated with \verb+\\+
-% command.  Unfortunately, this simpler method failed to survive the
-% modifications necessary for statement numbering.  However, the \verb+\\+
-% command can still be used to force a line break within a simple
-% statement.
+% \end{verbatim}
+% we would get
+% \begin{algorithmic}[1]
+%   \STATE $S \leftarrow 0$
+% \end{algorithmic}
+%
+% \begin{warning}
+%   For users of earlier versions of \keyword{algorithmic} this
+%   construct is a cause of an incompatibility.  In the earlier version,
+%   instead of starting simple statements with the \verb+\STATE+
+%   command, simple statements were entered as free text and terminated
+%   with \verb+\\+ command.  Unfortunately, this simpler method failed
+%   to survive the modifications necessary for statement numbering.
+%   However, the \verb+\\+ command can still be used to force a line
+%   break within a simple statement.
+% \end{warning}
 %
 %\subsection{The \emph{if-then-else} Statement}
 %
-% The \emph{if-then-else} construct takes the forms.
+% The \emph{if-then-else} construct takes the forms:
 % \begin{verbatim}
 % \IF{<condition>} <text> \ENDIF
 % \IF{<condition>} <text1> \ELSE <text2> \ENDIF
 % \IF{<condition1>} <text1> \ELSIF{<condition2>} <text2> \ELSE <text3> \ENDIF
 % \end{verbatim}
+%
 % In the third of these forms there is no limit placed on the number of
-% \verb+\ELSIF{<C>}+ that may be used.  For example,
+% \verb+\ELSIF{<condition>}+ that may be used.  For example,
 % \begin{verbatim}
 % \begin{algorithmic}
 % \IF{some condition is true}
@@ -223,12 +235,13 @@
 %
 % \subsection{The \emph{for} Loop}
 %
-% The \emph{for} loop takes the forms.
+% The \emph{for} loop takes two forms. Namely:
 % \begin{verbatim}
 % \FOR{<condition>} <text> \ENDFOR
 % \FORALL{<condition>} <text> \ENDFOR
 % \end{verbatim}
-% For example,
+%
+% \noindent For example,
 % \begin{verbatim}
 % \begin{algorithmic}
 % \FOR{$i=0$ to $10$}
@@ -257,9 +270,28 @@
 %   \ENDFOR
 % \end{algorithmic}
 %
+% \subsubsection{The \emph{to} Connective}
+% As may be clear from the usage of loops above, we usually want to
+% specify ranges over which a variable will assume values. To help make
+% this typographically distinct, the \keyword{algorithmic} package now
+% supports the \algorithmicto{} connective, which can be used like:
+% \begin{verbatim}
+% \begin{algorithmic}
+% \FOR{$i=0$ \TO $10$}
+% \STATE carry out some processing
+% \ENDFOR
+% \end{algorithmic}
+% \end{verbatim}
+% to produce the output
+% \begin{algorithmic}
+%   \FOR{$i=0$ \TO $10$}
+%     \STATE carry out some processing
+%   \ENDFOR
+% \end{algorithmic}
+%
 % \subsection{The \emph{while} Loop}
 %
-% The \emph{while} loop takes the form.
+% The \emph{while} loop takes the form
 % \begin{verbatim}
 % \WHILE{<condition>} <text> \ENDWHILE
 % \end{verbatim}
@@ -318,6 +350,34 @@
 %   \LOOP
 %     \STATE this processing will be repeated forever
 %   \ENDLOOP
+% \end{algorithmic}
+%
+% \subsection{The Logical Connectives}
+%
+% The connectives \algorithmicand, \algorithmicor, \algorithmicxor{} and
+% \algorithmicnot{} can be used in boolean expressions in the familiar,
+% expected way:
+% \begin{verbatim}
+% <expression> \AND <expression>
+% <expression> \OR <expression>
+% <expression> \XOR <expression>
+% \NOT <expression>
+% \end{verbatim}
+% according to their arity.\footnote{But there is nothing that prevents
+%   the user from violating the arity, from a syntatic point of view.}
+% For example,
+% \begin{verbatim}
+% \begin{algorithmic}
+% \IF{\NOT ($year \bmod 400$ \XOR $year \bmod 100$ \XOR $year \bmod 4$)}
+% \STATE $year$ does not represent a leap year.
+% \ENDIF
+% \end{algorithmic}
+% \end{verbatim}
+% produces
+% \begin{algorithmic}
+% \IF{\NOT ($year \bmod 400$ \XOR $year \bmod 100$ \XOR $year \bmod 4$)}
+% \STATE $year$ does not represent a leap year.
+% \ENDIF
 % \end{algorithmic}
 %
 % \subsection{The Precondition}
@@ -826,15 +886,12 @@
 % this float HERE'', which is something desired by many. The two
 % algorithms typeset in this document use this option.
 %
-% \theoremstyle{definition}
-% \newtheorem*{warning*}{Warning}
-%
 % \medskip
-% \begin{warning*}
+% \begin{warning}
 %   You \emph{can't} use the `H' positioning option together with the
 %   usual `h' (for ``here''), `b' (for ``bottom'') etc. This is a
 %   limitation (as far as I know) of the \texttt{float.sty} package.
-% \end{warning*}
+% \end{warning}
 %
 % \section[References in Algorithms]%
 % {Labels and References in Algorithms}
@@ -1137,15 +1194,15 @@
 %<algorithmic>{}{\ \algorithmiccomment{##1}}}
 %<algorithmic>  \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
 %<algorithmic>  \newcommand{\ENSURE}{\item[\algorithmicensure]}
-%<algorithmic>  \newcommand{\PRINT}{\ALC@it\algorithmicprint{}\ \ }
-%<algorithmic>  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{}\ \ }
+%<algorithmic>  \newcommand{\PRINT}{\ALC@it\algorithmicprint{} \ }
+%<algorithmic>  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{} \ }
 %<algorithmic>  \newcommand{\TRUE}{\algorithmictrue{}}
 %<algorithmic>  \newcommand{\FALSE}{\algorithmicfalse{}}
-%<algorithmic>  \newcommand{\BAND}{\algorithmicand{}}
-%<algorithmic>  \newcommand{\OR}{\algorithmicor{}}
-%<algorithmic>  \newcommand{\XOR}{\algorithmicxor{}}
-%<algorithmic>  \newcommand{\NOT}{\algorithmicnot{}}
-%<algorithmic>  \newcommand{\TO}{\algorithmicto{}}
+%<algorithmic>  \newcommand{\AND}{\algorithmicand{} }
+%<algorithmic>  \newcommand{\OR}{\algorithmicor{} }
+%<algorithmic>  \newcommand{\XOR}{\algorithmicxor{} }
+%<algorithmic>  \newcommand{\NOT}{\algorithmicnot{} }
+%<algorithmic>  \newcommand{\TO}{\algorithmicto{} }
 %<algorithmic>  \newcommand{\STATE}{\ALC@it}
 %<algorithmic>  \newcommand{\STMT}{\ALC@it}
 %<algorithmic>  \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
