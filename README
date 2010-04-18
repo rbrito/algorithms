@@ -1,3 +1,5 @@
+# The algorithms set of packages for LaTeX
+
 The "algorithms" bundle provides two environments, "algorithmic" and
 "algorithm", which are designed to be used together but may be used
 separately.
