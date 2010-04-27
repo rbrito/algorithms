@@ -1,3 +1,5 @@
+# The algorithms set of packages for LaTeX
+
 The "algorithms" bundle provides two environments, "algorithmic" and
 "algorithm", which are designed to be used together but may be used
 separately.
@@ -15,5 +17,4 @@ license, which is a Free Software license. It may, in the future, be
 released under the standard LaTeX license (the Latex Project Public
 License).
 
-
- -- Rogério Brito <rbrito@users.berlios.de>  Fri,  2 Jun 2006 21:54:10 -0300
+ -- RogÃ©rio Brito <rbrito@users.berlios.de>  Fri,  2 Jun 2006 21:54:10 -0300
