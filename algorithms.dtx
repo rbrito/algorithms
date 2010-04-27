@@ -32,7 +32,8 @@
 %
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[sc]{mathpazo}
 \usepackage[pdfstartview={FitH}]{hyperref}
@@ -989,284 +990,336 @@
 % Of course, you should follow those hints with common sense. Well, anything
 % should be done with common sense.
 %
+% \section{Implementation}
+%
+% \subsection{\texttt{algorithm}}
+%
+% The \texttt{algorithm} environment is derived from \texttt{float}
+% package, and, for this purpose, we need \nameoffile{float.sty}.  The
+% default style provided by \texttt{algorithm} is a ``ruled''
+% environment, but the user chan choose to use a ``boxed'' or a
+% ``plain'' display for the typeset algorithms.
+%
+%    \begin{macrocode}
+%<*algorithm>
+\RequirePackage{float}
+\RequirePackage{ifthen}
+\newcommand{\ALG@within}{nothing}
+\newboolean{ALG@within}
+\setboolean{ALG@within}{false}
+\newcommand{\ALG@floatstyle}{ruled}
+\newcommand{\ALG@name}{Algorithm}
+\newcommand{\listalgorithmname}{List of \ALG@name s}
+%    \end{macrocode}
+%
+% We, now, declare the options to control the style of floats:
+%
+%    \begin{macrocode}
+\DeclareOption{plain}{
+  \renewcommand{\ALG@floatstyle}{plain}
+}
+\DeclareOption{ruled}{
+  \renewcommand{\ALG@floatstyle}{ruled}
+}
+\DeclareOption{boxed}{
+  \renewcommand{\ALG@floatstyle}{boxed}
+}
+%    \end{macrocode}
+%
+% We, then, let the user control if algorithms should be numbered within
+% parts, chapters, sections etc or not numbered at all.
+%
+%    \begin{macrocode}
+\DeclareOption{part}{
+  \renewcommand{\ALG@within}{part}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{chapter}{
+  \renewcommand{\ALG@within}{chapter}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{section}{
+  \renewcommand{\ALG@within}{section}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{subsection}{
+  \renewcommand{\ALG@within}{subsection}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{subsubsection}{
+  \renewcommand{\ALG@within}{subsubsection}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{nothing}{
+  \renewcommand{\ALG@within}{nothing}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption*{\edef\ALG@name{\CurrentOption}}
+%    \end{macrocode}
+
+%
+% The options are processed.  The boolean value is tested and a new
+% enviroment is created with the appropriate options.  A
+% |\listofalgorithms| is also created.
+%
+%    \begin{macrocode}
+\ProcessOptions
+\floatstyle{\ALG@floatstyle}
+\ifthenelse{\boolean{ALG@within}}{
+  \ifthenelse{\equal{\ALG@within}{part}}
+     {\newfloat{algorithm}{htbp}{loa}[part]}{}
+  \ifthenelse{\equal{\ALG@within}{chapter}}
+     {\newfloat{algorithm}{htbp}{loa}[chapter]}{}
+  \ifthenelse{\equal{\ALG@within}{section}}
+     {\newfloat{algorithm}{htbp}{loa}[section]}{}
+  \ifthenelse{\equal{\ALG@within}{subsection}}
+     {\newfloat{algorithm}{htbp}{loa}[subsection]}{}
+  \ifthenelse{\equal{\ALG@within}{subsubsection}}
+     {\newfloat{algorithm}{htbp}{loa}[subsubsection]}{}
+  \ifthenelse{\equal{\ALG@within}{nothing}}
+     {\newfloat{algorithm}{htbp}{loa}}{}
+}{
+  \newfloat{algorithm}{htbp}{loa}
+}
+\floatname{algorithm}{\ALG@name}
+\newcommand{\listofalgorithms}{\listof{algorithm}{\listalgorithmname}}
+%</algorithm>
+%    \end{macrocode}
+
+% \subsection{\texttt{algorithmic}}
+%
+% The \texttt{algorithmic} environment is the one that actually presents
+% the pseudo-code (in a fashion similar to the
+% \texttt{table}/\texttt{tabular} environments).
+%
+% For the parsing of options, \texttt{algorithmic} requires the
+% \texttt{keyval} package.
+%    \begin{macrocode}
+%<*algorithmic>
+\RequirePackage{ifthen}
+\RequirePackage{keyval}
+\newboolean{ALC@noend}
+\setboolean{ALC@noend}{false}
+\newcounter{ALC@unique}    % new counter to make lines numbers be internally
+\setcounter{ALC@unique}{0} % different in different algorithms
+\newcounter{ALC@line}      % counter for current line
+\newcounter{ALC@rem}       % counter for lines not printed
+\newcounter{ALC@depth}
+\newlength{\ALC@tlm}
+
+\DeclareOption{noend}{\setboolean{ALC@noend}{true}}
+
+\ProcessOptions
+%    \end{macrocode}
+
+% For keyval-style options
+%    \begin{macrocode}
+\def\algsetup{\setkeys{ALG}}
+%    \end{macrocode}
+
+% For indentation of algorithms
+%    \begin{macrocode}
+\newlength{\algorithmicindent}
+\setlength{\algorithmicindent}{0pt}
+\define@key{ALG}{indent}{\setlength{\algorithmicindent}{#1}}
+\ifthenelse{\lengthtest{\algorithmicindent=0pt}}%
+        {\setlength{\algorithmicindent}{1em}}{}
+%    \end{macrocode}
+
+% For line numbers' delimiters
+%    \begin{macrocode}
+\newcommand{\ALC@linenodelimiter}{:}
+\define@key{ALG}{linenodelimiter}{\renewcommand{\ALC@linenodelimiter}{#1}}
+%    \end{macrocode}
+
+% For line numbers' size
+%    \begin{macrocode}
+\newcommand{\ALC@linenosize}{\footnotesize}
+\define@key{ALG}{linenosize}{\renewcommand{\ALC@linenosize}{#1}}
+%    \end{macrocode}
+
+% The default formats for every expression
+%    \begin{macrocode}
+\newcommand{\algorithmicrequire}{\textbf{Require:}}
+\newcommand{\algorithmicensure}{\textbf{Ensure:}}
+\newcommand{\algorithmiccomment}[1]{\{#1\}}
+\newcommand{\algorithmicend}{\textbf{end}}
+\newcommand{\algorithmicif}{\textbf{if}}
+\newcommand{\algorithmicthen}{\textbf{then}}
+\newcommand{\algorithmicelse}{\textbf{else}}
+\newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\newcommand{\algorithmicfor}{\textbf{for}}
+\newcommand{\algorithmicforall}{\textbf{for all}}
+\newcommand{\algorithmicdo}{\textbf{do}}
+\newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+\newcommand{\algorithmicwhile}{\textbf{while}}
+\newcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+\newcommand{\algorithmicloop}{\textbf{loop}}
+\newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+\newcommand{\algorithmicrepeat}{\textbf{repeat}}
+\newcommand{\algorithmicuntil}{\textbf{until}}
+\newcommand{\algorithmicprint}{\textbf{print}}
+\newcommand{\algorithmicreturn}{\textbf{return}}
+\newcommand{\algorithmicand}{\textbf{and}}
+\newcommand{\algorithmicor}{\textbf{or}}
+\newcommand{\algorithmicxor}{\textbf{xor}}
+\newcommand{\algorithmicnot}{\textbf{not}}
+\newcommand{\algorithmicto}{\textbf{to}}
+\newcommand{\algorithmicinputs}{\textbf{inputs}}
+\newcommand{\algorithmicoutputs}{\textbf{outputs}}
+\newcommand{\algorithmicglobals}{\textbf{globals}}
+\newcommand{\algorithmicbody}{\textbf{do}}
+\newcommand{\algorithmictrue}{\textbf{true}}
+\newcommand{\algorithmicfalse}{\textbf{false}}
+%    \end{macrocode}
+
+% The special items for the algorithm
+%    \begin{macrocode}
+\def\ALC@item[#1]{%
+\if@noparitem \@donoparitem
+  \else \if@inlabel \indent \par \fi
+         \ifhmode \unskip\unskip \par \fi
+         \if@newlist \if@nobreak \@nbitem \else
+                        \addpenalty\@beginparpenalty
+                        \addvspace\@topsep \addvspace{-\parskip}\fi
+           \else \addpenalty\@itempenalty \addvspace\itemsep
+          \fi
+    \global\@inlabeltrue
+\fi
+\everypar{\global\@minipagefalse\global\@newlistfalse
+          \if@inlabel\global\@inlabelfalse \hskip -\parindent \box\@labels
+             \penalty\z@ \fi
+          \everypar{}}\global\@nobreakfalse
+\if@noitemarg \@noitemargfalse \if@nmbrlist \refstepcounter{\@listctr}\fi \fi
+\sbox\@tempboxa{\makelabel{#1}}%
+\global\setbox\@labels
+ \hbox{\unhbox\@labels \hskip \itemindent
+       \hskip -\labelwidth \hskip -\ALC@tlm
+       \ifdim \wd\@tempboxa >\labelwidth
+                \box\@tempboxa
+          \else \hbox to\labelwidth {\unhbox\@tempboxa}\fi
+       \hskip \ALC@tlm}\ignorespaces}
+%    \end{macrocode}
+
+% The algorithmic environment is defined here.
+%    \begin{macrocode}
+\newenvironment{algorithmic}[1][0]{
+\setcounter{ALC@depth}{\@listdepth}%
+\let\@listdepth\c@ALC@depth%
+\let\@item\ALC@item%
+  \newcommand{\ALC@lno}{%
+\ifthenelse{\equal{\arabic{ALC@rem}}{0}}
+{{\ALC@linenosize \arabic{ALC@line}\ALC@linenodelimiter}}{}%
+}
+\let\@listii\@listi
+\let\@listiii\@listi
+\let\@listiv\@listi
+\let\@listv\@listi
+\let\@listvi\@listi
+\let\@listvii\@listi
+  \newenvironment{ALC@g}{
+    \begin{list}{\ALC@lno}{ \itemsep\z@ \itemindent\z@
+    \listparindent\z@ \rightmargin\z@
+    \topsep\z@ \partopsep\z@ \parskip\z@\parsep\z@
+    \leftmargin \algorithmicindent%1em
+    \addtolength{\ALC@tlm}{\leftmargin}
+    }
+  }
+  {\end{list}}
+  \newcommand{\ALC@it}{%
+    \stepcounter{ALC@rem}%
+    \ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}%
+    \stepcounter{ALC@line}%
+    \refstepcounter{ALC@unique}%
+    \item\def\@currentlabel{\theALC@line}%
+  }
+  \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
+{}{\ \algorithmiccomment{##1}}}
+%    \end{macrocode}
+% Each special word is defined here.
+% They are simple items or special items.
+%    \begin{macrocode}
+  \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
+  \newcommand{\ENSURE}{\item[\algorithmicensure]}
+  \newcommand{\PRINT}{\ALC@it\algorithmicprint{} \ }
+  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{} \ }
+  \newcommand{\TRUE}{\algorithmictrue{}}
+  \newcommand{\FALSE}{\algorithmicfalse{}}
+  \newcommand{\AND}{\algorithmicand{} }
+  \newcommand{\OR}{\algorithmicor{} }
+  \newcommand{\XOR}{\algorithmicxor{} }
+  \newcommand{\NOT}{\algorithmicnot{} }
+  \newcommand{\TO}{\algorithmicto{} }
+  \newcommand{\STATE}{\ALC@it}
+  \newcommand{\STMT}{\ALC@it}
+  \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
+  \newenvironment{ALC@inputs}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@outputs}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@globals}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@body}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@for}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@whl}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@loop}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@rpt}{\begin{ALC@g}}{\end{ALC@g}}
+  \renewcommand{\\}{\@centercr}
+  \newcommand{\INPUTS}[1][default]{\ALC@it\algorithmicinputs\ \ALC@com{##1}\begin{ALC@inputs}}
+  \newcommand{\ENDINPUTS}{\end{ALC@inputs}}
+  \newcommand{\OUTPUTS}[1][default]{\ALC@it\algorithmicoutputs\ \ALC@com{##1}\begin{ALC@outputs}}
+  \newcommand{\ENDOUTPUTS}{\end{ALC@outputs}}
+  \newcommand{\GLOBALS}{\ALC@it\algorithmicglobals\ }
+  \newcommand{\BODY}[1][default]{\ALC@it\algorithmicbody\ \ALC@com{##1}\begin{ALC@body}}
+  \newcommand{\ENDBODY}{\end{ALC@body}}
+  \newcommand{\IF}[2][default]{\ALC@it\algorithmicif\ ##2\ \algorithmicthen%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\ELSE}[1][default]{\end{ALC@if}\ALC@it\algorithmicelse%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\ELSIF}[2][default]%
+{\end{ALC@if}\ALC@it\algorithmicelsif\ ##2\ \algorithmicthen%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\FOR}[2][default]{\ALC@it\algorithmicfor\ ##2\ \algorithmicdo%
+\ALC@com{##1}\begin{ALC@for}}
+  \newcommand{\FORALL}[2][default]{\ALC@it\algorithmicforall\ ##2\ %
+\algorithmicdo%
+\ALC@com{##1}\begin{ALC@for}}
+  \newcommand{\WHILE}[2][default]{\ALC@it\algorithmicwhile\ ##2\ %
+\algorithmicdo%
+\ALC@com{##1}\begin{ALC@whl}}
+  \newcommand{\LOOP}[1][default]{\ALC@it\algorithmicloop%
+\ALC@com{##1}\begin{ALC@loop}}
+  \newcommand{\REPEAT}[1][default]{\ALC@it\algorithmicrepeat%
+\ALC@com{##1}\begin{ALC@rpt}}
+  \newcommand{\UNTIL}[1]{\end{ALC@rpt}\ALC@it\algorithmicuntil\ ##1}
+  \ifthenelse{\boolean{ALC@noend}}{
+    \newcommand{\ENDIF}{\end{ALC@if}}
+    \newcommand{\ENDFOR}{\end{ALC@for}}
+    \newcommand{\ENDWHILE}{\end{ALC@whl}}
+    \newcommand{\ENDLOOP}{\end{ALC@loop}}
+  }{
+    \newcommand{\ENDIF}{\end{ALC@if}\ALC@it\algorithmicendif}
+    \newcommand{\ENDFOR}{\end{ALC@for}\ALC@it\algorithmicendfor}
+    \newcommand{\ENDWHILE}{\end{ALC@whl}\ALC@it\algorithmicendwhile}
+    \newcommand{\ENDLOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
+  }
+  \renewcommand{\@toodeep}{}
+  \begin{list}{\ALC@lno}{\setcounter{ALC@rem}{0}\setcounter{ALC@line}{0}%
+    \itemsep\z@ \itemindent\z@ \listparindent\z@%
+    \partopsep\z@ \parskip\z@ \parsep\z@%
+    \labelsep 0.5em \topsep 0.2em%
+\ifthenelse{\equal{#1}{0}}
+  {\labelwidth 0.5em }
+  {\labelwidth  1.2em }
+\leftmargin\labelwidth \addtolength{\leftmargin}{\labelsep}
+    \ALC@tlm\labelsep
+  }
+}
+{\end{list}}
+%</algorithmic>
+%    \end{macrocode}
 % \addtocontents{toc}{\protect\end{multicols}}
-% \end{document}
 %
 %\StopEventually{}
-%<algorithm>\RequirePackage{float}
-%<algorithm>\RequirePackage{ifthen}
-%<algorithm>\newcommand{\ALG@within}{nothing}
-%<algorithm>\newboolean{ALG@within}
-%<algorithm>\setboolean{ALG@within}{false}
-%<algorithm>\newcommand{\ALG@floatstyle}{ruled}
-%<algorithm>\newcommand{\ALG@name}{Algorithm}
-%<algorithm>\newcommand{\listalgorithmname}{List of \ALG@name s}
-%
-%<algorithm>% Declare Options:
-%<algorithm>% * first: appearance
-%<algorithm>\DeclareOption{plain}{
-%<algorithm>  \renewcommand{\ALG@floatstyle}{plain}
-%<algorithm>}
-%<algorithm>\DeclareOption{ruled}{
-%<algorithm>  \renewcommand{\ALG@floatstyle}{ruled}
-%<algorithm>}
-%<algorithm>\DeclareOption{boxed}{
-%<algorithm>  \renewcommand{\ALG@floatstyle}{boxed}
-%<algorithm>}
-%<algorithm>% * then: numbering convention
-%<algorithm>\DeclareOption{part}{
-%<algorithm>  \renewcommand{\ALG@within}{part}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption{chapter}{
-%<algorithm>  \renewcommand{\ALG@within}{chapter}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption{section}{
-%<algorithm>  \renewcommand{\ALG@within}{section}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption{subsection}{
-%<algorithm>  \renewcommand{\ALG@within}{subsection}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption{subsubsection}{
-%<algorithm>  \renewcommand{\ALG@within}{subsubsection}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption{nothing}{
-%<algorithm>  \renewcommand{\ALG@within}{nothing}
-%<algorithm>  \setboolean{ALG@within}{true}
-%<algorithm>}
-%<algorithm>\DeclareOption*{\edef\ALG@name{\CurrentOption}}
-%
-%<algorithm>% ALGORITHM
-%<algorithm>%
-%<algorithm>\ProcessOptions
-%<algorithm>\floatstyle{\ALG@floatstyle}
-%<algorithm>\ifthenelse{\boolean{ALG@within}}{
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{part}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}[part]}{}
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{chapter}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}[chapter]}{}
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{section}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}[section]}{}
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{subsection}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}[subsection]}{}
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{subsubsection}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}[subsubsection]}{}
-%<algorithm>  \ifthenelse{\equal{\ALG@within}{nothing}}
-%<algorithm>     {\newfloat{algorithm}{htbp}{loa}}{}
-%<algorithm>}{
-%<algorithm>  \newfloat{algorithm}{htbp}{loa}
-%<algorithm>}
-%<algorithm>\floatname{algorithm}{\ALG@name}
-%
-%<algorithm>\newcommand{\listofalgorithms}{\listof{algorithm}{\listalgorithmname}}
-%
-%
-%<algorithmic>% The algorithmic.sty package:
-%
-%<algorithmic>\RequirePackage{ifthen}
-%<algorithmic>\RequirePackage{keyval}
-%<algorithmic>\newboolean{ALC@noend}
-%<algorithmic>\setboolean{ALC@noend}{false}
-%<algorithmic>\newcounter{ALC@unique}    % new counter to make lines numbers be internally
-%<algorithmic>\setcounter{ALC@unique}{0} % different in different algorithms
-%<algorithmic>\newcounter{ALC@line}      % counter for current line
-%<algorithmic>\newcounter{ALC@rem}       % counter for lines not printed
-%<algorithmic>\newcounter{ALC@depth}
-%<algorithmic>\newlength{\ALC@tlm}
-%<algorithmic>%
-%<algorithmic>\DeclareOption{noend}{\setboolean{ALC@noend}{true}}
-%<algorithmic>%
-%<algorithmic>\ProcessOptions
-%<algorithmic>%
-%<algorithmic>% For keyval-style options
-%<algorithmic>\def\algsetup{\setkeys{ALG}}
-%<algorithmic>%
-%<algorithmic>% For indentation of algorithms
-%<algorithmic>\newlength{\algorithmicindent}
-%<algorithmic>\setlength{\algorithmicindent}{0pt}
-%<algorithmic>\define@key{ALG}{indent}{\setlength{\algorithmicindent}{#1}}
-%<algorithmic>\ifthenelse{\lengthtest{\algorithmicindent=0pt}}%
-%<algorithmic>        {\setlength{\algorithmicindent}{1em}}{}
-%<algorithmic>%
-%<algorithmic>% For line numbers' delimiters
-%<algorithmic>\newcommand{\ALC@linenodelimiter}{:}
-%<algorithmic>\define@key{ALG}{linenodelimiter}{\renewcommand{\ALC@linenodelimiter}{#1}}
-%
-%<algorithmic>%
-%<algorithmic>% For line numbers' size
-%<algorithmic>\newcommand{\ALC@linenosize}{\footnotesize}
-%<algorithmic>\define@key{ALG}{linenosize}{\renewcommand{\ALC@linenosize}{#1}}
-%
-%<algorithmic>%
-%<algorithmic>% ALGORITHMIC
-%<algorithmic>\newcommand{\algorithmicrequire}{\textbf{Require:}}
-%<algorithmic>\newcommand{\algorithmicensure}{\textbf{Ensure:}}
-%<algorithmic>\newcommand{\algorithmiccomment}[1]{\{#1\}}
-%<algorithmic>\newcommand{\algorithmicend}{\textbf{end}}
-%<algorithmic>\newcommand{\algorithmicif}{\textbf{if}}
-%<algorithmic>\newcommand{\algorithmicthen}{\textbf{then}}
-%<algorithmic>\newcommand{\algorithmicelse}{\textbf{else}}
-%<algorithmic>\newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
-%<algorithmic>\newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
-%<algorithmic>\newcommand{\algorithmicfor}{\textbf{for}}
-%<algorithmic>\newcommand{\algorithmicforall}{\textbf{for all}}
-%<algorithmic>\newcommand{\algorithmicdo}{\textbf{do}}
-%<algorithmic>\newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
-%<algorithmic>\newcommand{\algorithmicwhile}{\textbf{while}}
-%<algorithmic>\newcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
-%<algorithmic>\newcommand{\algorithmicloop}{\textbf{loop}}
-%<algorithmic>\newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
-%<algorithmic>\newcommand{\algorithmicrepeat}{\textbf{repeat}}
-%<algorithmic>\newcommand{\algorithmicuntil}{\textbf{until}}
-%<algorithmic>\newcommand{\algorithmicprint}{\textbf{print}}
-%<algorithmic>\newcommand{\algorithmicreturn}{\textbf{return}}
-%<algorithmic>\newcommand{\algorithmicand}{\textbf{and}}
-%<algorithmic>\newcommand{\algorithmicor}{\textbf{or}}
-%<algorithmic>\newcommand{\algorithmicxor}{\textbf{xor}}
-%<algorithmic>\newcommand{\algorithmicnot}{\textbf{not}}
-%<algorithmic>\newcommand{\algorithmicto}{\textbf{to}}
-%<algorithmic>\newcommand{\algorithmicinputs}{\textbf{inputs}}
-%<algorithmic>\newcommand{\algorithmicoutputs}{\textbf{outputs}}
-%<algorithmic>\newcommand{\algorithmicglobals}{\textbf{globals}}
-%<algorithmic>\newcommand{\algorithmicbody}{\textbf{do}}
-%<algorithmic>\newcommand{\algorithmictrue}{\textbf{true}}
-%<algorithmic>\newcommand{\algorithmicfalse}{\textbf{false}}
-%<algorithmic>\def\ALC@item[#1]{%
-%<algorithmic>\if@noparitem \@donoparitem
-%<algorithmic>  \else \if@inlabel \indent \par \fi
-%<algorithmic>         \ifhmode \unskip\unskip \par \fi
-%<algorithmic>         \if@newlist \if@nobreak \@nbitem \else
-%<algorithmic>                        \addpenalty\@beginparpenalty
-%<algorithmic>                        \addvspace\@topsep \addvspace{-\parskip}\fi
-%<algorithmic>           \else \addpenalty\@itempenalty \addvspace\itemsep
-%<algorithmic>          \fi
-%<algorithmic>    \global\@inlabeltrue
-%<algorithmic>\fi
-%<algorithmic>\everypar{\global\@minipagefalse\global\@newlistfalse
-%<algorithmic>          \if@inlabel\global\@inlabelfalse \hskip -\parindent \box\@labels
-%<algorithmic>             \penalty\z@ \fi
-%<algorithmic>          \everypar{}}\global\@nobreakfalse
-%<algorithmic>\if@noitemarg \@noitemargfalse \if@nmbrlist \refstepcounter{\@listctr}\fi \fi
-%<algorithmic>\sbox\@tempboxa{\makelabel{#1}}%
-%<algorithmic>\global\setbox\@labels
-%<algorithmic> \hbox{\unhbox\@labels \hskip \itemindent
-%<algorithmic>       \hskip -\labelwidth \hskip -\ALC@tlm
-%<algorithmic>       \ifdim \wd\@tempboxa >\labelwidth
-%<algorithmic>                \box\@tempboxa
-%<algorithmic>          \else \hbox to\labelwidth {\unhbox\@tempboxa}\fi
-%<algorithmic>       \hskip \ALC@tlm}\ignorespaces}
-%<algorithmic>%
-%<algorithmic>\newenvironment{algorithmic}[1][0]{
-%<algorithmic>\setcounter{ALC@depth}{\@listdepth}%
-%<algorithmic>\let\@listdepth\c@ALC@depth%
-%<algorithmic>\let\@item\ALC@item%
-%<algorithmic>  \newcommand{\ALC@lno}{%
-%<algorithmic>\ifthenelse{\equal{\arabic{ALC@rem}}{0}}
-%<algorithmic>{{\ALC@linenosize \arabic{ALC@line}\ALC@linenodelimiter}}{}%
-%<algorithmic>}
-%<algorithmic>\let\@listii\@listi
-%<algorithmic>\let\@listiii\@listi
-%<algorithmic>\let\@listiv\@listi
-%<algorithmic>\let\@listv\@listi
-%<algorithmic>\let\@listvi\@listi
-%<algorithmic>\let\@listvii\@listi
-%<algorithmic>  \newenvironment{ALC@g}{
-%<algorithmic>    \begin{list}{\ALC@lno}{ \itemsep\z@ \itemindent\z@
-%<algorithmic>    \listparindent\z@ \rightmargin\z@
-%<algorithmic>    \topsep\z@ \partopsep\z@ \parskip\z@\parsep\z@
-%<algorithmic>    \leftmargin \algorithmicindent%1em
-%<algorithmic>    \addtolength{\ALC@tlm}{\leftmargin}
-%<algorithmic>    }
-%<algorithmic>  }
-%<algorithmic>  {\end{list}}
-%<algorithmic>  \newcommand{\ALC@it}{%
-%<algorithmic>    \stepcounter{ALC@rem}%
-%<algorithmic>    \ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}%
-%<algorithmic>    \stepcounter{ALC@line}%
-%<algorithmic>    \refstepcounter{ALC@unique}%
-%<algorithmic>    \item\def\@currentlabel{\theALC@line}%
-%<algorithmic>  }
-%<algorithmic>  \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
-%<algorithmic>{}{\ \algorithmiccomment{##1}}}
-%<algorithmic>  \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
-%<algorithmic>  \newcommand{\ENSURE}{\item[\algorithmicensure]}
-%<algorithmic>  \newcommand{\PRINT}{\ALC@it\algorithmicprint{} \ }
-%<algorithmic>  \newcommand{\RETURN}{\ALC@it\algorithmicreturn{} \ }
-%<algorithmic>  \newcommand{\TRUE}{\algorithmictrue{}}
-%<algorithmic>  \newcommand{\FALSE}{\algorithmicfalse{}}
-%<algorithmic>  \newcommand{\AND}{\algorithmicand{} }
-%<algorithmic>  \newcommand{\OR}{\algorithmicor{} }
-%<algorithmic>  \newcommand{\XOR}{\algorithmicxor{} }
-%<algorithmic>  \newcommand{\NOT}{\algorithmicnot{} }
-%<algorithmic>  \newcommand{\TO}{\algorithmicto{} }
-%<algorithmic>  \newcommand{\STATE}{\ALC@it}
-%<algorithmic>  \newcommand{\STMT}{\ALC@it}
-%<algorithmic>  \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
-%<algorithmic>  \newenvironment{ALC@inputs}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@outputs}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@globals}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@body}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@for}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@whl}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@loop}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \newenvironment{ALC@rpt}{\begin{ALC@g}}{\end{ALC@g}}
-%<algorithmic>  \renewcommand{\\}{\@centercr}
-%<algorithmic>  \newcommand{\INPUTS}[1][default]{\ALC@it\algorithmicinputs\ \ALC@com{##1}\begin{ALC@inputs}}
-%<algorithmic>  \newcommand{\ENDINPUTS}{\end{ALC@inputs}}
-%<algorithmic>  \newcommand{\OUTPUTS}[1][default]{\ALC@it\algorithmicoutputs\ \ALC@com{##1}\begin{ALC@outputs}}
-%<algorithmic>  \newcommand{\ENDOUTPUTS}{\end{ALC@outputs}}
-%<algorithmic>  \newcommand{\GLOBALS}{\ALC@it\algorithmicglobals\ }
-%<algorithmic>  \newcommand{\BODY}[1][default]{\ALC@it\algorithmicbody\ \ALC@com{##1}\begin{ALC@body}}
-%<algorithmic>  \newcommand{\ENDBODY}{\end{ALC@body}}
-%<algorithmic>  \newcommand{\IF}[2][default]{\ALC@it\algorithmicif\ ##2\ \algorithmicthen%
-%<algorithmic>\ALC@com{##1}\begin{ALC@if}}
-%<algorithmic>  \newcommand{\ELSE}[1][default]{\end{ALC@if}\ALC@it\algorithmicelse%
-%<algorithmic>\ALC@com{##1}\begin{ALC@if}}
-%<algorithmic>  \newcommand{\ELSIF}[2][default]%
-%<algorithmic>{\end{ALC@if}\ALC@it\algorithmicelsif\ ##2\ \algorithmicthen%
-%<algorithmic>\ALC@com{##1}\begin{ALC@if}}
-%<algorithmic>  \newcommand{\FOR}[2][default]{\ALC@it\algorithmicfor\ ##2\ \algorithmicdo%
-%<algorithmic>\ALC@com{##1}\begin{ALC@for}}
-%<algorithmic>  \newcommand{\FORALL}[2][default]{\ALC@it\algorithmicforall\ ##2\ %
-%<algorithmic>\algorithmicdo%
-%<algorithmic>\ALC@com{##1}\begin{ALC@for}}
-%<algorithmic>  \newcommand{\WHILE}[2][default]{\ALC@it\algorithmicwhile\ ##2\ %
-%<algorithmic>\algorithmicdo%
-%<algorithmic>\ALC@com{##1}\begin{ALC@whl}}
-%<algorithmic>  \newcommand{\LOOP}[1][default]{\ALC@it\algorithmicloop%
-%<algorithmic>\ALC@com{##1}\begin{ALC@loop}}
-%<algorithmic>  \newcommand{\REPEAT}[1][default]{\ALC@it\algorithmicrepeat%
-%<algorithmic>\ALC@com{##1}\begin{ALC@rpt}}
-%<algorithmic>  \newcommand{\UNTIL}[1]{\end{ALC@rpt}\ALC@it\algorithmicuntil\ ##1}
-%<algorithmic>  \ifthenelse{\boolean{ALC@noend}}{
-%<algorithmic>    \newcommand{\ENDIF}{\end{ALC@if}}
-%<algorithmic>    \newcommand{\ENDFOR}{\end{ALC@for}}
-%<algorithmic>    \newcommand{\ENDWHILE}{\end{ALC@whl}}
-%<algorithmic>    \newcommand{\ENDLOOP}{\end{ALC@loop}}
-%<algorithmic>  }{
-%<algorithmic>    \newcommand{\ENDIF}{\end{ALC@if}\ALC@it\algorithmicendif}
-%<algorithmic>    \newcommand{\ENDFOR}{\end{ALC@for}\ALC@it\algorithmicendfor}
-%<algorithmic>    \newcommand{\ENDWHILE}{\end{ALC@whl}\ALC@it\algorithmicendwhile}
-%<algorithmic>    \newcommand{\ENDLOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
-%<algorithmic>  }
-%<algorithmic>  \renewcommand{\@toodeep}{}
-%<algorithmic>  \begin{list}{\ALC@lno}{\setcounter{ALC@rem}{0}\setcounter{ALC@line}{0}%
-%<algorithmic>    \itemsep\z@ \itemindent\z@ \listparindent\z@%
-%<algorithmic>    \partopsep\z@ \parskip\z@ \parsep\z@%
-%<algorithmic>    \labelsep 0.5em \topsep 0.2em%
-%<algorithmic>\ifthenelse{\equal{#1}{0}}
-%<algorithmic>  {\labelwidth 0.5em }
-%<algorithmic>  {\labelwidth  1.2em }
-%<algorithmic>\leftmargin\labelwidth \addtolength{\leftmargin}{\labelsep}
-%<algorithmic>    \ALC@tlm\labelsep
-%<algorithmic>  }
-%<algorithmic>}
-%<algorithmic>{\end{list}}
 %\Finale
 %\PrintChanges
 %\PrintIndex
