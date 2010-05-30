@@ -15,6 +15,24 @@ for two environments being provided is to allow the user maximum
 flexibility.
 
 
+Installation
+------------
+
+If you are not using a distribution like TeX Live or MikTeX, you can
+easily install the package by running (on a command line; the $ signals
+denotes the prompt and should not be typed):
+
+$ tex algorithms.ins
+
+This should generate, among others, the files `algorithm.sty` and
+`algorithmic.sty`. To use them, just copy them to your texmf tree (or
+the local directory where the document you want to typeset resides).  If
+you would like to generate the documentation, just use, say:
+
+$ pdflatex algorithms.dtx
+$ pdflatex algorithms.dtx
+
+
 Development and Support
 -----------------------
 
