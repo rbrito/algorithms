@@ -22,7 +22,7 @@ If you are not using a distribution like TeX Live or MikTeX, you can
 easily install the package by running (on a command line; the $ signals
 denotes the prompt and should not be typed):
 
-$ tex algorithms.ins
+$ tex algorithms.dtx
 
 This should generate, among others, the files `algorithm.sty` and
 `algorithmic.sty`. To use them, just copy them to your texmf tree (or
@@ -53,4 +53,4 @@ released under the standard LaTeX license (the Latex Project Public
 License).
 
 
- -- Rogério Brito <rbrito@users.berlios.de>  Sun, 30 May 2010 20:01:42 -0300
+ -- Rogério Brito <rbrito@users.berlios.de>  Sun, 15 Nov 2010 05:01:42 -0200

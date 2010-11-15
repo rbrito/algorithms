@@ -1,41 +1,46 @@
-% \iffalse meta-comment
-%
-%  Copyright © 1994-2004   Peter Williams <pwil3058@bigpond.net.au>
-%  Copyright © 2005-2010   Rogério Brito <rbrito@ime.usp.br>
-%
-% This document file is free software; you can redistribute it and/or
-% modify it under the terms of the GNU Lesser General Public License as
-% published by the Free Software Foundation; either version 2 of the
-% License, or (at your option) any later version.
-%
-% This document file is distributed in the hope that it will be useful, but
-% WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
-% General Public License for more details.
-%
-% You should have received a copy of the GNU Lesser General Public License
-% along with this document file; if not, write to the Free Software
-% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301
-% USA.
-%
-% \fi
-%
 % \iffalse
-%<algorithm>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<algorithm>\ProvidesPackage{algorithm}
-%<algorithm>   [2009/08/24 v0.1 Document Style `algorithm' - floating environment]
-%
-%<algorithmic>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<algorithmic>\ProvidesPackage{algorithmic}
-%<algorithmic>   [2009/08/24 v0.1 Document Style `algorithmic']
-%
-%
+%<*generation>
+\begingroup
+\input docstrip
+  \keepsilent
+  \usedir{tex/latex/algorithms}
+  \askforoverwritefalse
+\preamble
+
+Copyright 1994-2004   Peter Williams <pwil3058@bigpond.net.au>
+Copyright 2005-2010   Rogerio Theodoro de Brito <rbrito@ime.usp.br>
+
+This document file is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+This document file is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this document file; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301
+USA.
+
+\endpreamble
+
+  \nopostamble
+  \generate{\file{algorithm.sty}{\from{algorithms.dtx}{algorithm}}}
+  \generate{\file{algorithmic.sty}{\from{algorithms.dtx}{algorithmic}}}
+
+  % The following two lines are a trick from wspr
+  \def\tempa{plain}
+  \ifx\tempa\fmtname\endgroup\expandafter\bye\fi
+\endgroup
+%</generation>
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
 \usepackage[T1]{fontenc}
-\usepackage[sc]{mathpazo}
+\usepackage{mathpazo}
 \usepackage[pdfstartview={FitH}]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -44,11 +49,21 @@
 \CodelineIndex
 \RecordChanges
 \begin{document}
-  \DocInput{algorithms.dtx}
+  \DocInput{\jobname.dtx}
 \end{document}
 %</driver>
+%<*algorithms>
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{algorithm}
+   [2010/11/15 v0.2 Document Style `algorithm' - floating environment]
+%</algorithms>
+%<*algorithmic>
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{algorithmic}
+   [2010/11/15 v0.2 Document Style `algorithmic']
+%</algorithmic>
+% % The ``documentation'' follows below the ``fi'' command.
 % \fi
-%
 %\CheckSum{0}
 % \CharacterTable
 % {Upper-case     \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -67,6 +82,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 % \changes{v0.1}{2009/08/24}{Migrated the package to .ins and .dtx format}
+% \changes{v0.2}{2009/11/15}{Migrated the package to a single .dtx file}
 %
 % \GetFileInfo{algorithm.sty}
 % \GetFileInfo{algorithmic.sty}
@@ -114,12 +130,10 @@
 %
 % Currently, this package consists of the following files:
 % \begin{itemize}
-%   \item \nameoffile{algorithms.ins}: the driver file
 %   \item \nameoffile{algorithms.dtx}: the source file
 %   \item \nameoffile{COPYING}: the license file
 %   \item \nameoffile{README}: remarks about the package
-%   \item \nameoffile{THANKS}: mentions of thanks for contributors to
-%   the package
+%   \item \nameoffile{THANKS}: mentions of contributions
 % \end{itemize}
 %
 % Starting with with the 2009-08-24 release, the package is now
@@ -133,11 +147,10 @@
 %
 %\section{Installation}
 %
-% The installation procedure of \textsf{algorithms} follows the usual
-% practice of packages shipped with a pair of
-% \nameoffile{.ins}/\nameoffile{.dtx}---simply type the comand:
+% The installation procedure of \textsf{algorithms} consists basically
+% of two steps:
 % \begin{quote}
-% \texttt{latex algorithms.ins}
+% \texttt{tex algorithms.dtx}
 % \end{quote}
 % and the \nameoffile{.sty} files will be generated. Copy them to a
 % place that is referenced by your \LaTeX{} distribution. To generate
@@ -1323,3 +1336,5 @@
 %\Finale
 %\PrintChanges
 %\PrintIndex
+\endinput
+\endbatchfile
