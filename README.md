@@ -53,4 +53,4 @@ released under the standard LaTeX license (the Latex Project Public
 License).
 
 
- -- Rogério Brito <rbrito@users.berlios.de>  Sun, 15 Nov 2010 05:01:42 -0200
+ -- Rogério Brito <rbrito@ime.usp.br>  Sun, 15 Nov 2010 05:01:42 -0200
