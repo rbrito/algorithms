@@ -1172,6 +1172,12 @@ USA.
 \newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
 \newcommand{\algorithmicrepeat}{\textbf{repeat}}
 \newcommand{\algorithmicuntil}{\textbf{until}}
+\newcommand{\algorithmicswitch}{\textbf{switch}}
+\newcommand{\algorithmicendswitch}{\algorithmicend\ \algorithmicswitch}
+\newcommand{\algorithmiccase}{\textbf{case}}
+\newcommand{\algorithmicendcase}{\algorithmicend\ \algorithmiccase}
+\newcommand{\algorithmicotherwise}{\textbf{otherwise}}
+\newcommand{\algorithmicendotherwise}{\algorithmicend\ \algorithmicotherwise}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
 \newcommand{\algorithmicand}{\textbf{and}}
@@ -1276,6 +1282,9 @@ USA.
   \newenvironment{ALC@whl}{\begin{ALC@g}}{\end{ALC@g}}
   \newenvironment{ALC@loop}{\begin{ALC@g}}{\end{ALC@g}}
   \newenvironment{ALC@rpt}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@switch}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@case}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@otherwise}{\begin{ALC@g}}{\end{ALC@g}}
   \renewcommand{\\}{\@centercr}
   \newcommand{\INPUTS}[1][default]{\ALC@it\algorithmicinputs\ \ALC@com{##1}\begin{ALC@inputs}}
   \newcommand{\ENDINPUTS}{\end{ALC@inputs}}
@@ -1304,16 +1313,28 @@ USA.
   \newcommand{\REPEAT}[1][default]{\ALC@it\algorithmicrepeat%
 \ALC@com{##1}\begin{ALC@rpt}}
   \newcommand{\UNTIL}[1]{\end{ALC@rpt}\ALC@it\algorithmicuntil\ ##1}
+  \newcommand{\SWITCH}[2][default]{\ALC@it\algorithmicswitch\ ##2\ %
+\ALC@com{##1}\begin{ALC@switch}}
+  \newcommand{\CASE}[2][default]{\ALC@it\algorithmiccase\ ##2\ %
+\ALC@com{##1}\begin{ALC@case}}
+  \newcommand{\OTHERWISE}[1][default]{\ALC@it\algorithmicotherwise%
+\ALC@com{##1}\begin{ALC@otherwise}}
   \ifthenelse{\boolean{ALC@noend}}{
     \newcommand{\ENDIF}{\end{ALC@if}}
     \newcommand{\ENDFOR}{\end{ALC@for}}
     \newcommand{\ENDWHILE}{\end{ALC@whl}}
     \newcommand{\ENDLOOP}{\end{ALC@loop}}
+    \newcommand{\ENDSWITCH}{\end{ALC@switch}}
+    \newcommand{\ENDCASE}{\end{ALC@case}}
+    \newcommand{\ENDOTHERWISE}{\end{ALC@otherwise}}
   }{
     \newcommand{\ENDIF}{\end{ALC@if}\ALC@it\algorithmicendif}
     \newcommand{\ENDFOR}{\end{ALC@for}\ALC@it\algorithmicendfor}
     \newcommand{\ENDWHILE}{\end{ALC@whl}\ALC@it\algorithmicendwhile}
     \newcommand{\ENDLOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
+    \newcommand{\ENDSWITCH}{\end{ALC@switch}\ALC@it\algorithmicendswitch}
+    \newcommand{\ENDCASE}{\end{ALC@case}\ALC@it\algorithmicendcase}
+    \newcommand{\ENDOTHERWISE}{\end{ALC@otherwise}\ALC@it\algorithmicendotherwise}
   }
   \renewcommand{\@toodeep}{}
   \begin{list}{\ALC@lno}{\setcounter{ALC@rem}{0}\setcounter{ALC@line}{0}%
