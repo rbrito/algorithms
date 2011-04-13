@@ -728,6 +728,10 @@ USA.
 % \newcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
 % \newcommand{\algorithmicloop}{\textbf{loop}}
 % \newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+% \newcommand{\algorithmicupon}{\textbf{upon}}
+% \newcommand{\algorithmicendupon}{\algorithmicend\ \algorithmicupon}
+% \newcommand{\algorithmicproc}{\textbf{procdure}}
+% \newcommand{\algorithmicendproc}{\algorithmicend\ \algorithmicproc}
 % \newcommand{\algorithmicrepeat}{\textbf{repeat}}
 % \newcommand{\algorithmicuntil}{\textbf{until}}
 % \newcommand{\algorithmicprint}{\textbf{print}}
@@ -1178,6 +1182,10 @@ USA.
 \newcommand{\algorithmicendcase}{\algorithmicend\ \algorithmiccase}
 \newcommand{\algorithmicotherwise}{\textbf{otherwise}}
 \newcommand{\algorithmicendotherwise}{\algorithmicend\ \algorithmicotherwise}
+\newcommand{\algorithmicupon}{\textbf{upon}}
+\newcommand{\algorithmicendupon}{\algorithmicend\ \algorithmicupon}
+\newcommand{\algorithmicproc}{\textbf{procedure}}
+\newcommand{\algorithmicendproc}{\algorithmicend\ \algorithmicproc}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
 \newcommand{\algorithmicand}{\textbf{and}}
@@ -1285,6 +1293,8 @@ USA.
   \newenvironment{ALC@switch}{\begin{ALC@g}}{\end{ALC@g}}
   \newenvironment{ALC@case}{\begin{ALC@g}}{\end{ALC@g}}
   \newenvironment{ALC@otherwise}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@upon}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@proc}{\begin{ALC@g}}{\end{ALC@g}}
   \renewcommand{\\}{\@centercr}
   \newcommand{\INPUTS}[1][default]{\ALC@it\algorithmicinputs\ \ALC@com{##1}\begin{ALC@inputs}}
   \newcommand{\ENDINPUTS}{\end{ALC@inputs}}
@@ -1319,6 +1329,11 @@ USA.
 \ALC@com{##1}\begin{ALC@case}}
   \newcommand{\OTHERWISE}[1][default]{\ALC@it\algorithmicotherwise%
 \ALC@com{##1}\begin{ALC@otherwise}}
+  \newcommand{\UPON}[2][default]{\ALC@it\algorithmicupon\ ##2\ %
+\algorithmicdo%
+\ALC@com{##1}\begin{ALC@upon}}
+  \newcommand{\PROC}[2][default]{\ALC@it\algorithmicproc\ ##2\ %
+\ALC@com{##1}\begin{ALC@proc}}
   \ifthenelse{\boolean{ALC@noend}}{
     \newcommand{\ENDIF}{\end{ALC@if}}
     \newcommand{\ENDFOR}{\end{ALC@for}}
@@ -1327,6 +1342,8 @@ USA.
     \newcommand{\ENDSWITCH}{\end{ALC@switch}}
     \newcommand{\ENDCASE}{\end{ALC@case}}
     \newcommand{\ENDOTHERWISE}{\end{ALC@otherwise}}
+    \newcommand{\ENDUPON}{\end{ALC@upon}}
+    \newcommand{\ENDPROC}{\end{ALC@proc}}
   }{
     \newcommand{\ENDIF}{\end{ALC@if}\ALC@it\algorithmicendif}
     \newcommand{\ENDFOR}{\end{ALC@for}\ALC@it\algorithmicendfor}
@@ -1335,6 +1352,8 @@ USA.
     \newcommand{\ENDSWITCH}{\end{ALC@switch}\ALC@it\algorithmicendswitch}
     \newcommand{\ENDCASE}{\end{ALC@case}\ALC@it\algorithmicendcase}
     \newcommand{\ENDOTHERWISE}{\end{ALC@otherwise}\ALC@it\algorithmicendotherwise}
+    \newcommand{\ENDUPON}{\end{ALC@upon}\ALC@it\algorithmicendupon}
+    \newcommand{\ENDPROC}{\end{ALC@proc}\ALC@it\algorithmicendproc}
   }
   \renewcommand{\@toodeep}{}
   \begin{list}{\ALC@lno}{\setcounter{ALC@rem}{0}\setcounter{ALC@line}{0}%
