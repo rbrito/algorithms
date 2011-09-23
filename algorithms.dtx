@@ -1165,6 +1165,16 @@ USA.
 \define@key{ALG}{linenosize}{\renewcommand{\ALC@linenosize}{#1}}
 %    \end{macrocode}
 
+% The following is a fix for use of \texttt{algorithmic} with Hebrew enabled
+% via babel. According to what I read, the Hebrew subpackage of babel
+% redefines the \texttt{\\arabic} command and this messes with the way that
+% we use the line numbering, resulting in listings without any kind of
+% numbering.
+%
+%    \begin{macrocode}
+\@ifundefined{@number}{\newcommand{\@number}[1]{#1}}{}
+%    \end{macrocode}
+
 % The default formats for every expression
 %    \begin{macrocode}
 \newcommand{\algorithmicrequire}{\textbf{Require:}}
@@ -1246,7 +1256,7 @@ USA.
 \let\@listdepth\c@ALC@depth%
 \let\@item\ALC@item%
   \newcommand{\ALC@lno}{%
-\ifthenelse{\equal{\arabic{ALC@rem}}{0}}
+\ifthenelse{\equal{\arabic{ALC@rem}}{\@number{0}}}
 {{\ALC@linenosize \arabic{ALC@line}\ALC@linenodelimiter}}{}%
 }
 \let\@listii\@listi
@@ -1266,7 +1276,7 @@ USA.
   {\end{list}}
   \newcommand{\ALC@it}{%
     \stepcounter{ALC@rem}%
-    \ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}%
+    \ifthenelse{\equal{\arabic{ALC@rem}}{\@number{#1}}}{\setcounter{ALC@rem}{0}}{}%
     \stepcounter{ALC@line}%
     \refstepcounter{ALC@unique}%
     \item\def\@currentlabel{\theALC@line}%
