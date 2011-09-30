@@ -1,0 +1,46 @@
+/* Some properties: background-color, background-image,
+   background-repeat, background-position, font-family, font-size,
+   color, margin */
+
+
+body		{ color: #000000; background-color: #ffffff; }
+
+h1		{ text-align: center; color: #000000; }
+h2, h3, h4	{ text-align: left; color: #000000; }
+
+.meta		{ font-style: italic; text-align: center; }
+
+/* Menus */
+.menu		{ position: absolute;
+		  left: 1%; right: 80%; top: 40px;
+		  position: fixed; border: medium solid #ffffff; }
+
+.menutitle	{ display: block;
+		  color: #000000;
+		  background-color: #c8c8ff;
+		  font-weight: bold;
+		  text-align: center; }
+
+.menuselected	{ display: block;
+		  color: #000000;
+		  background-color: #e0e0ff;
+		  font-weight: normal;
+		  text-align: left; border-top: medium solid #ffffff; }
+
+.menuitem	{ display: block;
+		  color: #000000;
+		  background-color: #f0f0ff;
+		  font-weight: normal;
+		  text-align: left; border-top: medium solid #ffffff; }
+
+/* Conteúdo */
+.content	{ color: #000000;
+		  background-color: #f0f0ff;
+		  position: absolute;
+		  left: 21%; top: 40px; right: 1%; }
+
+/* Título */
+.pagetitle	{ color: #000000;
+		  background-color: #ffffff;
+		  position: absolute;
+		  left: 0%; right: 0%; }
