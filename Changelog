@@ -1,0 +1,29 @@
+# 2017-11-08
+
+
+* Update project to use UTF-8 encoding
+* Update the README file to use markdown
+* Added SWITCH/CASE/OTHERWISE statements.
+* Update the project to use a single distribution file.
+* Added upon and procedure keywords
+* Fix line numbering of algorithmic when using the Hebrew option of babel.
+    
+  Problem communicated by Eyal Rozenberg <eyalroz@technion.ac.il> and fix
+  based on on a modified version of algorithmic.sty published by Yoav
+  Goldberg <yoavg@cs.bgu.ac.il>.
+    
+  It appers to work with English, but I would like to receive feedback from
+  speakers of other languages (in particular, of those *not* based on the
+  Latin alphabet).
+* Add `end repeat` command
+* Fix typo in documentation. Thanks to Tao Zhao for the report.
+* README: Use HTTPS for the URLs.
+* algorithms.dtx: Update copyright years and version string.
+* algorithms.dtx: Fix bug with inconsistent spacing.
+    
+  Thanks to pluton (https://tex.stackexchange.com/users/371/pluton) for
+  communicating the problem and to Andrew Swann
+  (https://tex.stackexchange.com/users/15925/andrew-swann) for providing the
+  solution.
+
+# Previous entries omitted
