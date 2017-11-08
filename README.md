@@ -1,5 +1,4 @@
-The algorithms set of packages for LaTeX
-----------------------------------------
+# The algorithms set of packages for LaTeX
 
 The `algorithms` bundle provides two environments, `algorithmic` and
 `algorithm`, designed to typeset pseudo-code with LaTeX.
@@ -15,8 +14,7 @@ for two environments being provided is to allow the user maximum
 flexibility.
 
 
-Installation
-------------
+## Installation
 
 If you are not using a distribution like TeX Live or MikTeX, you can
 easily install the package by running (on a command line; the $ signals
@@ -33,8 +31,7 @@ you would like to generate the documentation, just use, say:
     $ pdflatex algorithms.dtx
 
 
-Development and Support
------------------------
+## Development and Support
 
 The source code for the bundle is currently hosted in a `git` repository at
 <https://github.com/rbrito/algorithms>.
@@ -44,8 +41,7 @@ or feature requests that may be filed on the issue tracker at
 <https://github.com/rbrito/algorithms/issues>.
 
 
-The License
------------
+## The License
 
 The algorithms bundle is (currently) licensed under the Lesser GPL
 license, which is a Free Software license. It may, in the future, be
