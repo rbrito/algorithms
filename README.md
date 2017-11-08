@@ -49,4 +49,4 @@ released under the standard LaTeX license (the LaTeX Project Public
 License).
 
 
- -- Rogério Brito <rbrito@ime.usp.br>  Sun, 15 Nov 2010 05:01:42 -0200
+ -- Rogério Brito <rbrito@ime.usp.br>  Wed, 08 Nov 2017 05:23:56 -0200
