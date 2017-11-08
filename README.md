@@ -37,11 +37,11 @@ Development and Support
 -----------------------
 
 The source code for the bundle is currently hosted in a `git` repository at
-<http://github.com/rbrito/algorithms>.
+<https://github.com/rbrito/algorithms>.
 
 The author welcomes any contribution and also tries to address any bugs
 or feature requests that may be filed on the issue tracker at
-<http://github.com/rbrito/algorithms/issues>.
+<https://github.com/rbrito/algorithms/issues>.
 
 
 The License
