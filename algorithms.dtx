@@ -376,14 +376,22 @@ USA.
 %   \ENDLOOP
 % \end{algorithmic}
 %
-% \subsection{Loop Control}
+% \subsection{Loop Control -- \emph{break} and \emph{continue}}
 %
-% There are some specific commands used to control any loop structure. These
+% There are two specific commands used to control any loop structure. These
 % commands are present in most of programming languages and can be used for
 % algorithm description.
 %
-% \emph{continue} is used to jump to the next iteration of the loop. All the
-% commands after \emph{continue} will not run for the current loop cycle.
+% The first one is \emph{break}, used to terminate immediately the loop.
+%
+% \emph{break} can be used with the follow form:
+% \begin{verbatim}
+% \BREAK
+% \end{verbatim}
+%
+% The second one is \emph{continue}, used to jump to the next iteration of the
+% loop. All the commands after \emph{continue} will not run for the current loop
+% cycle.
 %
 % \emph{continue} can be used with the follow form:
 % \begin{verbatim}
@@ -761,6 +769,7 @@ USA.
 % \newcommand{\algorithmicuntil}{\textbf{until}}
 % \newcommand{\algorithmicprint}{\textbf{print}}
 % \newcommand{\algorithmiccontinue}{\textbf{continue}}
+% \newcommand{\algorithmicbreak}{\textbf{break}}
 % \newcommand{\algorithmicreturn}{\textbf{return}}
 % \newcommand{\algorithmictrue}{\textbf{true}}
 % \newcommand{\algorithmicfalse}{\textbf{false}}
@@ -1225,6 +1234,7 @@ USA.
 \newcommand{\algorithmicendproc}{\algorithmicend\ \algorithmicproc}
 \newcommand{\algorithmicprint}{\textbf{print}}
 \newcommand{\algorithmiccontinue}{\textbf{continue}}
+\newcommand{\algorithmicbreak}{\textbf{break}}
 \newcommand{\algorithmicreturn}{\textbf{return}}
 \newcommand{\algorithmicand}{\textbf{and}}
 \newcommand{\algorithmicor}{\textbf{or}}
@@ -1309,6 +1319,7 @@ USA.
   \newcommand{\ENSURE}{\item[\algorithmicensure]}
   \newcommand{\PRINT}{\ALC@it\algorithmicprint{} \ }
   \newcommand{\CONTINUE}{\ALC@it\algorithmiccontinue{}}
+  \newcommand{\BREAK}{\ALC@it\algorithmicbreak{}}
   \newcommand{\RETURN}{\ALC@it\algorithmicreturn{} \ }
   \newcommand{\TRUE}{\algorithmictrue{}}
   \newcommand{\FALSE}{\algorithmicfalse{}}
